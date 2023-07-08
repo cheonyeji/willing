@@ -1,0 +1,15 @@
+@import "react-day-picker/dist/style.css";
+
+.rdp {
+    font-size: 14px;
+    --rdp-cell-size: 2.5em;
+    margin: 23.5px 20px;
+}
+
+.rdp-caption {
+    margin-bottom: 15px;
+}
+
+.rdp-months {
+    justify-content: center;
+}

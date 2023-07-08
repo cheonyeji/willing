@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { DayPicker } from "react-day-picker";
-import "react-day-picker/dist/style.css";
+import "./calendar.css";
 import { selectedDateState } from "../../models/atoms";
 
 const css = `
@@ -31,7 +31,6 @@ function ShowCalendar() {
       <style>{css}</style>
       <DayPicker
         mode="single" // single day can be selected
-        showOutsideDays // show outside dates
         weekStartsOn={1} // start Mon
         selected={pickedDate}
         onDayClick={handleDayClick} // custom day select handler
