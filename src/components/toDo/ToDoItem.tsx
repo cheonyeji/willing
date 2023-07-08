@@ -71,11 +71,12 @@ const ItemCard = styled.li`
 
   display: flex;
   justify-content: space-between;
+  word-break: break-all; // for forbidding text overflow
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`
-  width: 1em;
-  height: 1em;
+  min-width: 1em;
+  min-height: 1em;
   border-radius: 50%;
   background-color: ${(props) => props.colorstring};
   margin-right: 8px;
@@ -84,7 +85,6 @@ const ColorCircle = styled.div<{ colorstring: string }>`
 const ItemText = styled.div`
   font-size: 12px;
   font-weight: 400;
-
   display: flex;
   align-items: center;
 `;
