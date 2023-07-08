@@ -1,0 +1,14 @@
+* {
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: Noto Sans;
+}
+
+/* prevent drag */
+body {
+    margin: 0 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
