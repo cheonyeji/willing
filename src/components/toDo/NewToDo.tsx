@@ -38,14 +38,13 @@ function NewToDo() {
         setSelectedGroupId={setSelectedGroupId}
       />
       <form onSubmit={sumbitHandler}>
-        <input
+        <Input
           type="text"
           name="todoInput"
           placeholder="할일을 입력하세요"
           ref={todoInputRef}
           autoComplete="off"
         />
-        <button type="submit">✔</button>
       </form>
     </Wrapper>
   );
@@ -55,4 +54,16 @@ export default NewToDo;
 
 const Wrapper = styled.div`
   display: flex;
+  padding: 10px 0;
+`;
+
+const Input = styled.input`
+  border: none;
+  padding: 8px;
+  font-size: 12px;
+  border-radius: 4px;
+  &:focus {
+    outline: none;
+    background-color: #00000012;
+  }
 `;
