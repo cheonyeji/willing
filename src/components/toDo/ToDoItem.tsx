@@ -64,10 +64,10 @@ function ToDoItem({ item }: ToDoItemProps) {
 export default ToDoItem;
 
 const ItemCard = styled.li`
-  border: 0.5px solid #0000001a;
+  border: 1px solid #00000033;
   border-radius: 7px;
-  padding: 10px 20px;
-  margin-bottom: 10px;
+  padding: 11px 11px;
+  margin-bottom: 12px;
 
   display: flex;
   justify-content: space-between;
@@ -79,7 +79,7 @@ const ColorCircle = styled.div<{ colorstring: string }>`
   min-height: 1em;
   border-radius: 50%;
   background-color: ${(props) => props.colorstring};
-  margin-right: 8px;
+  margin-right: 12px;
 `;
 
 const ItemText = styled.div`

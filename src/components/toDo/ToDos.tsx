@@ -29,7 +29,7 @@ const DraggableUl = styled.ul`
   padding: 0;
 
   // set temporary height for auto-scroll only in ToDos.tsx (but need to fix)
-  height: 80vh;
+  height: 70vh;
   overflow-y: auto;
 
   // custom scrollbar
