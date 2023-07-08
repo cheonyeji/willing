@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { groupItemById, groupsState } from "../../models/atoms";
 import { styled } from "styled-components";
+import IconSelectDown from "../icons/IconSelectDown";
+import IconSelectUp from "../icons/IconSelectUp";
 
 type GroupSelectProps = {
   selectedGroupId: number;
@@ -27,10 +29,13 @@ function GroupSelect(props: GroupSelectProps) {
     setIsUlVisible(!isUlVisible);
   };
   return (
-    <div>
+    <Wrapper>
       <SelectBtn onClick={toggleSelect}>
         <ColorCircle colorstring={selectedGroupItem!.color} />
         <TitleSpan>{selectedGroupItem!.title}</TitleSpan>
+        <IconWrapper>
+          {isUlVisible ? <IconSelectUp /> : <IconSelectDown />}
+        </IconWrapper>
       </SelectBtn>
       <Ul visible={isUlVisible}>
         {groups.map((group) => (
@@ -40,50 +45,57 @@ function GroupSelect(props: GroupSelectProps) {
           </Li>
         ))}
       </Ul>
-    </div>
+    </Wrapper>
   );
 }
 
 export default GroupSelect;
 
-const SelectBtn = styled.button`
-  width: 100px;
+const Wrapper = styled.div`
+  margin-right: 7px;
+`;
+
+const SelectBtn = styled.span`
   border: none;
-  background-color: #ffffff;
+  background-color: #cae2fe80;
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
-  &:hover {
-    background-color: #14141410;
-  }
-  padding: 2px;
+  padding: 0;
+  border-radius: 4px;
+  height: 31px;
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`
-  width: 1em;
-  height: 1em;
+  min-width: 10px;
+  min-height: 10px;
   border-radius: 50%;
   background-color: ${(props) => props.colorstring};
-  margin-right: 5px;
+  margin: 0 11px 0 5px;
 `;
 
 const TitleSpan = styled.span`
-  width: 70px;
+  width: 80px;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 8px;
+`;
+
 const Ul = styled.ul<{ visible: boolean }>`
-  font-size: 10px;
   display: ${(props) => (props.visible ? "block" : "none")};
   list-style: none;
-  padding: 5px;
+  padding: 4px;
   position: absolute;
   border: 1px solid #717171;
-  border-radius: 3px;
+  border-radius: 4px;
   background-color: #ffffff;
 `;
 
@@ -92,7 +104,7 @@ const Li = styled.li`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background-color: #e3e3f3;
+    background-color: #cae2fe9c;
   }
   padding: 3px 5px;
   border-radius: 2px;
