@@ -19,7 +19,7 @@ const css = `
 `;
 
 function ShowCalendar() {
-  const [pickedDate, setPickedDate] = useState<Date>();
+  const [pickedDate, setPickedDate] = useState<Date>(new Date());
   const setselectedDateState = useSetRecoilState(selectedDateState);
   const handleDayClick = (day: Date) => {
     setPickedDate(day);
