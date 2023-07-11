@@ -2,17 +2,32 @@ import { useRef } from "react";
 import { styled } from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Memo from "../../models/memo";
-import { memosState } from "../../models/atoms";
+import { memosState, selectedDateState } from "../../models/atoms";
 
 function NewMemo() {
   const memoInputRef = useRef<HTMLTextAreaElement>(null);
   const setMemos = useSetRecoilState(memosState);
   const memos = useRecoilValue(memosState);
+
+  const selectedDate = useRecoilValue(selectedDateState);
+
   const sumbitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
     const enteredText = memoInputRef.current!.value;
-    const newMemo = new Memo(Date.now(), enteredText, new Date());
+    const memoSendTime = new Date(
+      selectedDate.getFullYear(),
+      selectedDate.getMonth(),
+      selectedDate.getDate(),
+      new Date().getHours(),
+      new Date().getMinutes(),
+      new Date().getSeconds()
+    );
+    const newMemo = new Memo(Date.now(), enteredText, memoSendTime);
+
+    if (enteredText.trim().length === 0) {
+      return;
+    }
 
     setMemos((prev) => prev.concat(newMemo));
     console.log(memos);
