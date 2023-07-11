@@ -10,8 +10,8 @@ function IconSelectUp() {
       <path
         d="M10 5L5.5 1L1 5"
         stroke="black"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
