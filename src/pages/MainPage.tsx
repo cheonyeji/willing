@@ -46,4 +46,7 @@ const LeftSidePageWrapper = styled((props: pageProps) => (
 ))`
   background-color: #ffffff;
   grid-column: 1/3;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 `;

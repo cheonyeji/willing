@@ -18,4 +18,18 @@ export default Groups;
 
 const Ul = styled.ul`
   padding: 0;
+  overflow-y: auto;
+  // custom scrollbar
+  &::-webkit-scrollbar {
+    width: 6px; /* width of scrollbar */
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 25%; /* height of scrollbar */
+    background: #b9cee6; /* color of scollbar */
+    border-radius: 3px;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 3px;
+    background: #abcbfc3b; /* scrollbar background color*/
+  }
 `;

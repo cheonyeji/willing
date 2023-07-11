@@ -21,6 +21,8 @@ const Item = styled.li`
   display: flex;
   align-items: center;
   margin-bottom: 18px;
+  margin-left: 13px;
+  margin-right: 13px;
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`

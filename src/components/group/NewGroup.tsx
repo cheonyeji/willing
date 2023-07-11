@@ -52,6 +52,9 @@ export default NewGroup;
 const Form = styled.form`
   display: flex;
   margin-bottom: 18px;
+  margin-left: 13px;
+  margin-right: 13px;
+
   flex-grow: 1;
 `;
 

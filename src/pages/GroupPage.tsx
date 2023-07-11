@@ -14,5 +14,7 @@ function GroupPage() {
 export default GroupPage;
 
 const Wrapper = styled.div`
-  padding: 0 13px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 `;
