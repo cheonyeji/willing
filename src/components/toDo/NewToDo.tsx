@@ -37,7 +37,7 @@ function NewToDo() {
         selectedGroupId={selectedGroupId}
         setSelectedGroupId={setSelectedGroupId}
       />
-      <form onSubmit={sumbitHandler}>
+      <Form onSubmit={sumbitHandler}>
         <Input
           type="text"
           name="todoInput"
@@ -45,7 +45,7 @@ function NewToDo() {
           ref={todoInputRef}
           autoComplete="off"
         />
-      </form>
+      </Form>
     </Wrapper>
   );
 }
@@ -54,10 +54,15 @@ export default NewToDo;
 
 const Wrapper = styled.div`
   display: flex;
-  padding: 10px 0;
+  margin: 30px 30px 18.5px 30px;
+`;
+
+const Form = styled.form`
+  flex-grow: 1;
 `;
 
 const Input = styled.input`
+  width: 100%;
   border: none;
   padding: 8px;
   font-size: 12px;

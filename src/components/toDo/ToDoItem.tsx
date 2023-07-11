@@ -64,10 +64,13 @@ function ToDoItem({ item }: ToDoItemProps) {
 export default ToDoItem;
 
 const ItemCard = styled.li`
-  border: 1px solid #00000033;
+  box-shadow: 0px 0px 15px 0px rgba(29, 90, 132, 0.08);
   border-radius: 7px;
   padding: 11px 11px;
+
   margin-bottom: 12px;
+  margin-left: 30px;
+  margin-right: 30px;
 
   display: flex;
   justify-content: space-between;
