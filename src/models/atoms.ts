@@ -19,7 +19,7 @@ export interface IGroup {
 // ToDo Group
 export const groupsState = atom<IGroup[]>({
   key: "groupsState",
-  default: [{ id: 0, title: "DEFAULT", color: "#000000" }],
+  default: [{ id: 0, title: "DEFAULT", color: "#707070" }],
 });
 
 // return groupColor code (find by groupId). use selectorFamily for parameter
