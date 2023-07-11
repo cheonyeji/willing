@@ -29,7 +29,7 @@ const Ul = styled.ul`
 
   padding: 10px 12px;
 
-  // set 100% height for auto-scroll only in ToDos.tsx
+  // for auto-scroll (height: 100% is necessary)
   height: 100%;
   overflow-y: auto;
 
