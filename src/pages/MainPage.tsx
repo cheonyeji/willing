@@ -28,14 +28,17 @@ const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
   margin: 30px 0;
   grid-column: 3/10;
   background-color: #ffffff;
+  border-radius: 7px;
 `;
 const RightSidePageWrapper = styled((props: pageProps) => (
   <RightSidePage {...props} />
 ))`
   margin: 30px 0;
   grid-column: 10/13;
-  background-color: #ffffff;
   margin-right: 30px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 `;
 
 const LeftSidePageWrapper = styled((props: pageProps) => (
@@ -43,5 +46,4 @@ const LeftSidePageWrapper = styled((props: pageProps) => (
 ))`
   background-color: #ffffff;
   grid-column: 1/3;
-  padding-left: 30px;
 `;
