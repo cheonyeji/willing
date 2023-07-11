@@ -7,8 +7,6 @@ import { memosState, selectedDateState } from "../../models/atoms";
 function NewMemo() {
   const memoInputRef = useRef<HTMLTextAreaElement>(null);
   const setMemos = useSetRecoilState(memosState);
-  const memos = useRecoilValue(memosState);
-
   const selectedDate = useRecoilValue(selectedDateState);
 
   const sumbitHandler = (event: React.FormEvent) => {
@@ -30,8 +28,6 @@ function NewMemo() {
     }
 
     setMemos((prev) => prev.concat(newMemo));
-    console.log(memos);
-
     memoInputRef.current!.value = "";
   };
   return (
@@ -55,8 +51,8 @@ const Form = styled.form`
   justify-content: stretch;
   align-items: center;
 
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
 `;
 
 const Textarea = styled.textarea`
