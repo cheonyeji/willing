@@ -19,12 +19,10 @@ function GroupSelect(props: GroupSelectProps) {
   );
 
   const toggleSelect = () => {
-    console.log("toggleSelect is called");
     setIsUlVisible(!isUlVisible);
   };
 
   const liClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    console.log("liClickHandler is called");
     props.setSelectedGroupId(+event.currentTarget.id);
     setIsUlVisible(!isUlVisible);
   };
@@ -56,7 +54,6 @@ const Wrapper = styled.div`
 `;
 
 const SelectBtn = styled.span`
-  border: none;
   background-color: #cae2fe80;
   display: flex;
   align-items: center;
