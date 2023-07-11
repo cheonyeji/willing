@@ -20,6 +20,7 @@ const Item = styled.li`
   font-size: 12px;
   display: flex;
   align-items: center;
+  margin-bottom: 18px;
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`
