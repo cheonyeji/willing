@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { groupColorById, toDosState } from "../../models/atoms";
 import { styled } from "styled-components";
 import Todo from "../../models/todo";
 import ToDo from "../../models/todo";
+import EditText from "./EditText";
 
 type ToDoItemProps = {
   item: Todo;
@@ -10,6 +12,7 @@ type ToDoItemProps = {
 
 function ToDoItem({ item }: ToDoItemProps) {
   const groupColorString = useRecoilValue(groupColorById(item.groupId));
+  const [isEdit, setIsEdit] = useState(false);
 
   const setToDos = useSetRecoilState(toDosState);
   const toggleCheckbox = (isChecked: boolean) => {
@@ -45,7 +48,13 @@ function ToDoItem({ item }: ToDoItemProps) {
     <ItemCard>
       <ItemText>
         <ColorCircle colorstring={groupColorString} />
-        {item.text}
+        <TextSpan onDoubleClick={() => setIsEdit(!isEdit)}>
+          {isEdit ? (
+            <EditText text={item.text} setIsEdit={setIsEdit} itemId={item.id} />
+          ) : (
+            item.text
+          )}
+        </TextSpan>
       </ItemText>
 
       <input
@@ -73,7 +82,6 @@ const ItemCard = styled.li`
   margin-right: 30px;
 
   display: flex;
-  justify-content: space-between;
   word-break: break-all; // for forbidding text overflow
 `;
 
@@ -90,4 +98,12 @@ const ItemText = styled.div`
   font-weight: 400;
   display: flex;
   align-items: center;
+  flex-grow: 1;
+
+  margin-right: 10px;
+`;
+
+const TextSpan = styled.span`
+  width: 100%;
+  display: block;
 `;
