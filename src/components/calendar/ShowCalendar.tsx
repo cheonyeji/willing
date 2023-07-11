@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { DayPicker } from "react-day-picker";
 import "./calendar.css";
 import { selectedDateState } from "../../models/atoms";
@@ -18,21 +18,21 @@ const css = `
   }
 `;
 
-function ShowCalendar() {
-  const [pickedDate, setPickedDate] = useState<Date>(new Date());
-  const setselectedDateState = useSetRecoilState(selectedDateState);
+type ShowCalendarProps = { className: string };
+
+function ShowCalendar(props: ShowCalendarProps) {
+  const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
   const handleDayClick = (day: Date) => {
-    setPickedDate(day);
-    setselectedDateState(day);
+    setSelectedDate(day);
   };
 
   return (
-    <div>
+    <div className={props.className}>
       <style>{css}</style>
       <DayPicker
         mode="single" // single day can be selected
         weekStartsOn={1} // start Mon
-        selected={pickedDate}
+        selected={selectedDate}
         onDayClick={handleDayClick} // custom day select handler
         // for CSS
         modifiersClassNames={{
