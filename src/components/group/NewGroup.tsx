@@ -3,10 +3,10 @@ import { useSetRecoilState } from "recoil";
 import { groupsState } from "../../models/atoms";
 
 import styled from "styled-components";
+import SelectDropdown from "./SelectDropdown";
 
 function NewGroup() {
-  const colorArr = ["#AEE4FF", "#e1aeff", "#6bd2bf"];
-  const [groupColorState, setGroupColorState] = useState<string>();
+  const [groupColorState, setGroupColorState] = useState<string>("#AEE4FF");
   const groupInputRef = useRef<HTMLInputElement>(null);
   const setGroups = useSetRecoilState(groupsState);
 
@@ -30,44 +30,39 @@ function NewGroup() {
     groupInputRef.current!.value = "";
   };
 
-  const radioHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setGroupColorState(event.target.value);
-  };
   return (
-    <form onSubmit={submitHandler}>
-      {colorArr.map((colorItem) => (
-        <RadioBtn
-          key={colorItem}
-          colorstring={colorItem}
-          onChange={radioHandler}
-          value={colorItem}
-          type="radio"
-          name="groupColor"
-        />
-      ))}
-      <input
+    <Form onSubmit={submitHandler}>
+      <SelectDropdown
+        groupColorState={groupColorState}
+        setGroupColorState={setGroupColorState}
+      />
+      <Input
         type="text"
         name="groupInput"
         autoComplete="off"
         ref={groupInputRef}
-        placeholder="새로운 그룹을 추가하세요"
+        placeholder="그룹이름을 추가하세요"
       />
-      <button type="submit">✔</button>
-    </form>
+    </Form>
   );
 }
 
 export default NewGroup;
 
-const RadioBtn = styled.input<{ colorstring: string }>`
-  appearance: none;
-  border: 2px solid ${(props) => props.colorstring};
-  background-color: transparent;
-  border-radius: 50%;
-  width: 1em;
-  height: 1em;
-  &:checked {
-    border: 3px solid ${(props) => props.colorstring};
-    background-color: ${(props) => props.colorstring};
+const Form = styled.form`
+  display: flex;
+  margin-bottom: 18px;
+  flex-grow: 1;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  border: none;
+  padding: 5px 0px;
+  font-size: 12px;
+  color: #929292;
+  &:focus {
+    outline: none;
+    color: #000;
   }
 `;
