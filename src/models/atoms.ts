@@ -94,3 +94,17 @@ export const memosState = atom<IMemo[]>({
   key: "memosState",
   default: [],
 });
+
+// 날짜에 맞는 메모
+export const memosByDateSelector = selector({
+  key: "memosByDateSelector",
+  get: ({ get }) => {
+    const memos = get(memosState);
+    const selectedDate = get(selectedDateState);
+    const memosBySelectedDate: IMemo[] = memos.filter((memo) =>
+      isSameDate(memo.sendTime, selectedDate)
+    );
+    memosBySelectedDate.reverse();
+    return memosBySelectedDate;
+  },
+});
