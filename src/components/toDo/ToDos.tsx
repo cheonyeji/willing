@@ -2,28 +2,28 @@ import { useRecoilValue } from "recoil";
 import ToDoItem from "./ToDoItem";
 import { toDosByDateSelector } from "../../models/atoms";
 import { styled } from "styled-components";
+import { Droppable } from "react-beautiful-dnd";
 
 function ToDos() {
   const toDosByDate = useRecoilValue(toDosByDateSelector);
 
   return (
-    <DraggableUl>
-      {toDosByDate.map((item) => (
-        <ToDoItem key={item.id} item={item} />
-      ))}
-    </DraggableUl>
+    <Droppable droppableId="todos">
+      {(provided) => (
+        <Ul ref={provided.innerRef} {...provided.droppableProps}>
+          {toDosByDate.map((item, index) => (
+            <ToDoItem key={item.id} index={index} item={item} />
+          ))}
+          {provided.placeholder}
+        </Ul>
+      )}
+    </Droppable>
   );
 }
 
 export default ToDos;
 
-const DraggableUl = styled.ul`
-  // Allow drag only in todo list area
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-
+const Ul = styled.ul`
   // remove list default css
   list-style: none;
   padding: 0;

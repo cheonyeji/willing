@@ -2,15 +2,17 @@ import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { groupColorById, toDosState } from "../../models/atoms";
 import { styled } from "styled-components";
-import Todo from "../../models/todo";
 import ToDo from "../../models/todo";
 import EditText from "./EditText";
+import { Draggable } from "react-beautiful-dnd";
+import { findSameId } from "../../functions/RecoilFunctions";
 
 type ToDoItemProps = {
-  item: Todo;
+  item: ToDo;
+  index: number;
 };
 
-function ToDoItem({ item }: ToDoItemProps) {
+function ToDoItem({ item, index }: ToDoItemProps) {
   const groupColorString = useRecoilValue(groupColorById(item.groupId));
   const [isEdit, setIsEdit] = useState(false);
 
@@ -18,11 +20,6 @@ function ToDoItem({ item }: ToDoItemProps) {
   const toggleCheckbox = (isChecked: boolean) => {
     // 해당 item id 전체 요소에서 찾아서 바꾸기
     setToDos((prevToDos) => {
-      const findSameId = (element: ToDo, targetId: number) => {
-        if (element.id === targetId) {
-          return true;
-        }
-      };
       const targetIndex = prevToDos.findIndex((element) =>
         findSameId(element, item.id)
       );
@@ -45,28 +42,40 @@ function ToDoItem({ item }: ToDoItemProps) {
   };
 
   return (
-    <ItemCard>
-      <ItemText>
-        <ColorCircle colorstring={groupColorString} />
-        <TextSpan onDoubleClick={() => setIsEdit(!isEdit)}>
-          {isEdit ? (
-            <EditText text={item.text} setIsEdit={setIsEdit} itemId={item.id} />
-          ) : (
-            item.text
-          )}
-        </TextSpan>
-      </ItemText>
+    <Draggable draggableId={item.id + ""} index={index}>
+      {(provided) => (
+        <ItemCard
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <ItemText>
+            <ColorCircle colorstring={groupColorString} />
+            <TextSpan onDoubleClick={() => setIsEdit(!isEdit)}>
+              {isEdit ? (
+                <EditText
+                  text={item.text}
+                  setIsEdit={setIsEdit}
+                  itemId={item.id}
+                />
+              ) : (
+                item.text
+              )}
+            </TextSpan>
+          </ItemText>
 
-      <input
-        type="checkbox"
-        name=""
-        id=""
-        checked={item.isDone}
-        onChange={(e) => {
-          toggleCheckbox(e.target.checked);
-        }}
-      />
-    </ItemCard>
+          <input
+            type="checkbox"
+            name=""
+            id=""
+            checked={item.isDone}
+            onChange={(e) => {
+              toggleCheckbox(e.target.checked);
+            }}
+          />
+        </ItemCard>
+      )}
+    </Draggable>
   );
 }
 

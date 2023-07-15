@@ -1,17 +1,45 @@
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import LeftSidePage from "./LeftSidePage";
 import RightSidePage from "./RightSidePage";
 import ToDoPage from "./ToDoPage";
 import styled from "styled-components";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { toDosByDateSelector, toDosState } from "../models/atoms";
+import { findSameId } from "../functions/RecoilFunctions";
 
 type pageProps = { className: string };
 
 function MainPage() {
+  const setTodos = useSetRecoilState(toDosState);
+  const toDosByDate = useRecoilValue(toDosByDateSelector);
+
+  const changeOrder = ({ destination, draggableId }: DropResult) => {
+    if (!destination) return;
+
+    setTodos((allTodos) => {
+      const copyTodos = [...allTodos];
+
+      const sourceIndex = allTodos.findIndex((element) =>
+        findSameId(element, +draggableId)
+      );
+      const moveTodo = copyTodos[sourceIndex];
+      const destinationIndex = allTodos.findIndex((element) =>
+        findSameId(element, toDosByDate[destination.index].id)
+      );
+      copyTodos.splice(sourceIndex, 1);
+      copyTodos.splice(destinationIndex, 0, moveTodo);
+
+      return copyTodos;
+    });
+  };
   return (
-    <Wrapper>
-      <LeftSidePageWrapper className="" />
-      <ToDoPageWrapper className="" />
-      <RightSidePageWrapper className="" />
-    </Wrapper>
+    <DragDropContext onDragEnd={changeOrder}>
+      <Wrapper>
+        <LeftSidePageWrapper className="" />
+        <ToDoPageWrapper className="" />
+        <RightSidePageWrapper className="" />
+      </Wrapper>
+    </DragDropContext>
   );
 }
 
