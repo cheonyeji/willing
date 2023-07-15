@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { groupColorById, toDosState } from "../../models/atoms";
+import {
+  groupColorById,
+  isOverTrashCanState,
+  toDosState,
+} from "../../models/atoms";
 import { styled } from "styled-components";
 import ToDo from "../../models/todo";
 import EditText from "./EditText";
 import { Draggable } from "react-beautiful-dnd";
-import { findSameId } from "../../functions/RecoilFunctions";
+import { findSameId } from "../../utils/RecoilFunctions";
 
 type ToDoItemProps = {
   item: ToDo;
@@ -17,6 +21,8 @@ function ToDoItem({ item, index }: ToDoItemProps) {
   const [isEdit, setIsEdit] = useState(false);
 
   const setToDos = useSetRecoilState(toDosState);
+  const isOverTrashCan = useRecoilValue(isOverTrashCanState);
+
   const toggleCheckbox = (isChecked: boolean) => {
     // 해당 item id 전체 요소에서 찾아서 바꾸기
     setToDos((prevToDos) => {
@@ -43,11 +49,13 @@ function ToDoItem({ item, index }: ToDoItemProps) {
 
   return (
     <Draggable draggableId={item.id + ""} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <ItemCard
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          isOverTrashCan={isOverTrashCan}
+          isDragging={snapshot.isDragging}
         >
           <ItemText>
             <ColorCircle colorstring={groupColorString} />
@@ -81,7 +89,11 @@ function ToDoItem({ item, index }: ToDoItemProps) {
 
 export default React.memo(ToDoItem);
 
-const ItemCard = styled.li`
+interface ICard {
+  isOverTrashCan: boolean;
+  isDragging: boolean;
+}
+const ItemCard = styled.li<ICard>`
   box-shadow: 0px 0px 15px 0px rgba(29, 90, 132, 0.08);
   border-radius: 7px;
   padding: 11px 11px;
@@ -89,7 +101,9 @@ const ItemCard = styled.li`
   margin-bottom: 12px;
   margin-left: 30px;
   margin-right: 30px;
-
+  background-color: #ffffff;
+  box-shadow: ${(props) =>
+    props.isOverTrashCan && props.isDragging ? "0 0 0.3rem #d34747b4" : ""};
   display: flex;
   word-break: break-all; // for forbidding text overflow
 `;
