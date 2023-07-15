@@ -1,4 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
+import { isSameDate } from "../functions/RecoilFunctions";
 
 /* 선택된 날짜 State */
 // 서비스 시작 화면은 오늘날짜, 날짜 기준 수정 가능
@@ -60,14 +61,6 @@ export const toDosState = atom<IToDo[]>({
   key: "toDosState",
   default: [],
 });
-
-export const isSameDate = (date1: Date, date2: Date) => {
-  return (
-    date1.getFullYear() === date2.getFullYear() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getDate() === date2.getDate()
-  );
-};
 
 export const toDosByDateSelector = selector({
   key: "toDosByDateSelector",

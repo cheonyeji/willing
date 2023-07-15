@@ -1,8 +1,9 @@
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { isSameDate, selectedDateState } from "../../models/atoms";
+import { selectedDateState } from "../../models/atoms";
 import IconYesterday from "../icons/IconYesterday";
 import IconTomorrow from "../icons/IconTomorrow";
+import { isSameDate } from "../../functions/RecoilFunctions";
 
 function ToDoHeader() {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
