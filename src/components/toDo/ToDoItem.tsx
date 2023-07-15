@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { groupColorById, toDosState } from "../../models/atoms";
 import { styled } from "styled-components";
@@ -79,7 +79,7 @@ function ToDoItem({ item, index }: ToDoItemProps) {
   );
 }
 
-export default ToDoItem;
+export default React.memo(ToDoItem);
 
 const ItemCard = styled.li`
   box-shadow: 0px 0px 15px 0px rgba(29, 90, 132, 0.08);
