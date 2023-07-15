@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { isSameDate } from "../functions/RecoilFunctions";
+import { isSameDate } from "../utils/RecoilFunctions";
 
 /* 선택된 날짜 State */
 // 서비스 시작 화면은 오늘날짜, 날짜 기준 수정 가능
@@ -100,4 +100,16 @@ export const memosByDateSelector = selector({
     memosBySelectedDate.reverse();
     return memosBySelectedDate;
   },
+});
+
+/* 드래그 중인 여부 체크 (쓰레기통 visibility) */
+export const isDraggingState = atom<boolean>({
+  key: "isDraggingState",
+  default: false,
+});
+
+/* 쓰레기통 위에 있는 여부 체크 (글자색 변경) */
+export const isOverTrashCanState = atom<boolean>({
+  key: "isOverTrashCanState",
+  default: false,
 });
