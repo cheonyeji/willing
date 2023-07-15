@@ -8,7 +8,12 @@ import {
 import { styled } from "styled-components";
 import ToDo from "../../models/todo";
 import EditText from "./EditText";
-import { Draggable } from "react-beautiful-dnd";
+import {
+  Draggable,
+  DraggableStateSnapshot,
+  DraggingStyle,
+  NotDraggingStyle,
+} from "react-beautiful-dnd";
 import { findSameId } from "../../utils/RecoilFunctions";
 
 type ToDoItemProps = {
@@ -46,6 +51,20 @@ function ToDoItem({ item, index }: ToDoItemProps) {
       return newState;
     });
   };
+  const getStyle = (
+    style: DraggingStyle | NotDraggingStyle,
+    snapshot: DraggableStateSnapshot,
+    isOverTrashCan: boolean
+  ) => {
+    if (!snapshot.isDropAnimating || !isOverTrashCan) {
+      return style;
+    }
+    return {
+      ...style,
+      // cannot be 0, but make it super tiny
+      transitionDuration: `0.001s`,
+    };
+  };
 
   return (
     <Draggable draggableId={item.id + ""} index={index}>
@@ -56,6 +75,12 @@ function ToDoItem({ item, index }: ToDoItemProps) {
           {...provided.dragHandleProps}
           isOverTrashCan={isOverTrashCan}
           isDragging={snapshot.isDragging}
+          style={getStyle(
+            provided.draggableProps.style!,
+            snapshot,
+            isOverTrashCan
+          )}
+          isDone={item.isDone}
         >
           <ItemText>
             <ColorCircle colorstring={groupColorString} />
@@ -92,6 +117,7 @@ export default React.memo(ToDoItem);
 interface ICard {
   isOverTrashCan: boolean;
   isDragging: boolean;
+  isDone: boolean;
 }
 const ItemCard = styled.li<ICard>`
   box-shadow: 0px 0px 15px 0px rgba(29, 90, 132, 0.08);
@@ -106,6 +132,7 @@ const ItemCard = styled.li<ICard>`
     props.isOverTrashCan && props.isDragging ? "0 0 0.3rem #d34747b4" : ""};
   display: flex;
   word-break: break-all; // for forbidding text overflow
+  color: ${(props) => (props.isDone ? "#929292" : "#000000")};
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`
