@@ -21,6 +21,7 @@ function MainPage() {
   const setIsOverTrashCan = useSetRecoilState(isOverTrashCanState);
   const dragEndHandler = ({ destination, draggableId }: DropResult) => {
     setIsDragging(false);
+    setIsOverTrashCan(false);
     if (!destination) {
       return;
     }
@@ -55,7 +56,7 @@ function MainPage() {
   return (
     <DragDropContext
       onDragEnd={dragEndHandler}
-      onBeforeDragStart={() => setIsDragging(true)}
+      onBeforeCapture={() => setIsDragging(true)}
       onDragUpdate={(update) => {
         if (update.destination?.droppableId === "trashcan") {
           setIsOverTrashCan(true);
