@@ -70,11 +70,11 @@ const IconWrapper = styled.div`
 const Ul = styled.ul<{ visible: boolean }>`
   display: ${(props) => (props.visible ? "block" : "none")};
   list-style: none;
-  padding: 4px;
+  padding: 0;
   position: absolute;
-  border: 1px solid #717171;
   border-radius: 4px;
   background-color: #ffffff;
+  box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
 `;
 
 const Li = styled.li`
@@ -84,6 +84,6 @@ const Li = styled.li`
   &:hover {
     background-color: #cae2fe9c;
   }
-  padding: 3px 5px;
+  padding: 8px;
   border-radius: 2px;
 `;

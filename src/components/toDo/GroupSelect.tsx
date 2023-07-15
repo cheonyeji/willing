@@ -91,18 +91,19 @@ const Ul = styled.ul<{ visible: boolean }>`
   list-style: none;
   padding: 4px;
   position: absolute;
-  border: 1px solid #717171;
   border-radius: 4px;
   background-color: #ffffff;
+  box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
+  max-width: 160px;
 `;
 
 const Li = styled.li`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   cursor: pointer;
   &:hover {
     background-color: #cae2fe9c;
   }
   padding: 3px 5px;
-  border-radius: 2px;
+  border-radius: 4px;
 `;
