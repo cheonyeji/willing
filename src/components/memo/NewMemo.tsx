@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import Memo from "../../models/memo";
 import { memosState, selectedDateState } from "../../models/atoms";
+import IconPlus from "../icons/IconPlus";
 
 function NewMemo() {
   const memoInputRef = useRef<HTMLTextAreaElement>(null);
@@ -37,7 +38,10 @@ function NewMemo() {
         autoComplete="off"
         ref={memoInputRef}
       ></Textarea>
-      <Button type="submit">+</Button>
+
+      <Button type="submit">
+        <IconPlus />
+      </Button>
     </Form>
   );
 }
@@ -66,13 +70,8 @@ const Textarea = styled.textarea`
 `;
 
 const Button = styled.button`
-  border-radius: 3px;
-  text-align: center;
+  background-color: transparent;
   border: none;
-  background-color: #abcbfc;
-  color: white;
   cursor: pointer;
-  &:hover {
-    background-color: #7bb0ff;
-  }
+  padding: 0;
 `;
