@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { groupItemById, groupsState } from "../../models/atoms";
+import { IGroup, groupItemById, groupsState } from "../../models/atoms";
 import { styled } from "styled-components";
 import IconSelectDown from "../icons/IconSelectDown";
 import IconSelectUp from "../icons/IconSelectUp";
+import Dropdown from "../UI/Dropdown";
 
-type GroupSelectProps = {
+type SelectGroupProps = {
   selectedGroupId: number;
   setSelectedGroupId: (n: number) => void;
 };
 
-function GroupSelect(props: GroupSelectProps) {
+function SelectGroup(props: SelectGroupProps) {
   const groups = useRecoilValue(groupsState);
   const [isUlVisible, setIsUlVisible] = useState<boolean>(false);
 
@@ -26,6 +27,7 @@ function GroupSelect(props: GroupSelectProps) {
     props.setSelectedGroupId(+event.currentTarget.id);
     setIsUlVisible(!isUlVisible);
   };
+
   return (
     <Wrapper>
       <SelectBtn onClick={toggleSelect}>
@@ -35,19 +37,17 @@ function GroupSelect(props: GroupSelectProps) {
           {isUlVisible ? <IconSelectUp /> : <IconSelectDown />}
         </IconWrapper>
       </SelectBtn>
-      <Ul visible={isUlVisible}>
-        {groups.map((group) => (
-          <Li key={group.id} id={group.id.toString()} onClick={liClickHandler}>
-            <ColorCircle colorstring={group.color} />
-            {group.title}
-          </Li>
-        ))}
-      </Ul>
+      <Dropdown<IGroup>
+        isUlVisible={isUlVisible}
+        setIsUlVisible={setIsUlVisible}
+        liClickHandler={liClickHandler}
+        dataArray={groups}
+      />
     </Wrapper>
   );
 }
 
-export default GroupSelect;
+export default SelectGroup;
 
 const Wrapper = styled.div`
   margin-right: 7px;
@@ -69,7 +69,7 @@ const ColorCircle = styled.div<{ colorstring: string }>`
   min-height: 10px;
   border-radius: 50%;
   background-color: ${(props) => props.colorstring};
-  margin: 0 11px 0 5px;
+  margin: 8px;
 `;
 
 const TitleSpan = styled.span`
@@ -84,26 +84,4 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   margin: 0 8px;
-`;
-
-const Ul = styled.ul<{ visible: boolean }>`
-  display: ${(props) => (props.visible ? "block" : "none")};
-  list-style: none;
-  padding: 4px;
-  position: absolute;
-  border-radius: 4px;
-  background-color: #ffffff;
-  box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
-  max-width: 160px;
-`;
-
-const Li = styled.li`
-  display: flex;
-  align-items: baseline;
-  cursor: pointer;
-  &:hover {
-    background-color: #cae2fe9c;
-  }
-  padding: 3px 5px;
-  border-radius: 4px;
 `;
