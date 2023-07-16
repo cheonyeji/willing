@@ -1,12 +1,15 @@
 import { useRef, useState } from "react";
-import { useSetRecoilState } from "recoil";
-import { groupsState } from "../../models/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { colorItemByIdSelector, groupsState } from "../../models/atoms";
 
 import styled from "styled-components";
-import SelectDropdown from "./SelectDropdown";
+import SelectColor from "./SelectColor";
 
 function NewGroup() {
-  const [groupColorState, setGroupColorState] = useState<string>("#AEE4FF");
+  const [selectedColorIdState, setSelectedColorIdState] = useState(0);
+  const colorItemById = useRecoilValue(
+    colorItemByIdSelector(selectedColorIdState)
+  );
   const groupInputRef = useRef<HTMLInputElement>(null);
   const setGroups = useSetRecoilState(groupsState);
 
@@ -22,7 +25,7 @@ function NewGroup() {
     setGroups((prev) => [
       ...prev,
       {
-        color: groupColorState!,
+        color: colorItemById.color,
         id: Date.now(),
         title: enteredText,
       },
@@ -32,9 +35,9 @@ function NewGroup() {
 
   return (
     <Form onSubmit={submitHandler}>
-      <SelectDropdown
-        groupColorState={groupColorState}
-        setGroupColorState={setGroupColorState}
+      <SelectColor
+        selectedColorIdState={selectedColorIdState}
+        setSelectedColorIdState={setSelectedColorIdState}
       />
       <Input
         type="text"
