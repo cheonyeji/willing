@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedDateState, toDosState } from "../../models/atoms";
 import ToDo from "../../models/todo";
 import { styled } from "styled-components";
-import GroupSelect from "./GroupSelect";
+import SelectGroup from "./SelectGroup";
 
 function NewToDo() {
   const [selectedGroupId, setSelectedGroupId] = useState<number>(0);
@@ -33,7 +33,7 @@ function NewToDo() {
 
   return (
     <Wrapper>
-      <GroupSelect
+      <SelectGroup
         selectedGroupId={selectedGroupId}
         setSelectedGroupId={setSelectedGroupId}
       />
