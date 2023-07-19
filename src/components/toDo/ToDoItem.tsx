@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
+  IGroup,
   groupColorById,
   isOverTrashCanState,
   toDosState,
+  groupsState,
 } from "../../models/atoms";
 import { styled } from "styled-components";
 import ToDo from "../../models/todo";
@@ -15,6 +17,7 @@ import {
   NotDraggingStyle,
 } from "react-beautiful-dnd";
 import { findSameId } from "../../utils/RecoilFunctions";
+import Dropdown from "../UI/Dropdown";
 
 type ToDoItemProps = {
   item: ToDo;
@@ -22,8 +25,10 @@ type ToDoItemProps = {
 };
 
 function ToDoItem({ item, index }: ToDoItemProps) {
+  const groups = useRecoilValue(groupsState);
   const groupColorString = useRecoilValue(groupColorById(item.groupId));
   const [isEdit, setIsEdit] = useState(false);
+  const [isUlVisible, setIsUlVisible] = useState(false);
 
   const setToDos = useSetRecoilState(toDosState);
   const isOverTrashCan = useRecoilValue(isOverTrashCanState);
@@ -66,6 +71,39 @@ function ToDoItem({ item, index }: ToDoItemProps) {
     };
   };
 
+  const liClickHandler = (
+    event: React.MouseEvent<HTMLElement>,
+    itemId: number
+  ) => {
+    setIsUlVisible(false);
+
+    // 해당 item id 전체 요소에서 찾아서 groupId 클릭된 요소로 바꾸기
+    setToDos((prevToDos) => {
+      const findSameId = (element: ToDo, targetId: number) => {
+        if (element.id === targetId) {
+          return true;
+        }
+      };
+      const targetIndex = prevToDos.findIndex((element) =>
+        findSameId(element, itemId)
+      );
+      const modifiedToDo = new ToDo(
+        prevToDos[targetIndex].text,
+        +event.currentTarget.id,
+        prevToDos[targetIndex].dueDate,
+        prevToDos[targetIndex].createdDate,
+        prevToDos[targetIndex].isDone
+      );
+
+      // because of state immutability, cannot mutate state. So set new State
+      const newState = [...prevToDos];
+      newState.splice(targetIndex, 1);
+      newState.splice(targetIndex, 0, modifiedToDo);
+
+      return newState;
+    });
+  };
+
   return (
     <Draggable draggableId={item.id + ""} index={index}>
       {(provided, snapshot) => (
@@ -83,7 +121,13 @@ function ToDoItem({ item, index }: ToDoItemProps) {
           isDone={item.isDone}
         >
           <ItemText>
-            <ColorCircle colorstring={groupColorString} />
+            <ColorCircle
+              colorstring={groupColorString}
+              onDoubleClick={() => {
+                setIsUlVisible(!isUlVisible);
+              }}
+            />
+
             <TextSpan onDoubleClick={() => setIsEdit(!isEdit)}>
               {isEdit ? (
                 <EditText
@@ -96,7 +140,14 @@ function ToDoItem({ item, index }: ToDoItemProps) {
               )}
             </TextSpan>
           </ItemText>
-
+          <Dropdown<IGroup>
+            isUlVisible={isUlVisible}
+            setIsUlVisible={setIsUlVisible}
+            liClickHandler={(e: React.MouseEvent<HTMLElement>) =>
+              liClickHandler(e, item.id)
+            }
+            dataArray={groups}
+          />
           <input
             type="checkbox"
             name=""
