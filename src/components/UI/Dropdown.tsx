@@ -9,7 +9,7 @@ interface DropdownAttrs {
 interface DropdownProps<T> {
   isUlVisible: boolean;
   setIsUlVisible: (x: boolean) => void;
-  liClickHandler: (event: React.MouseEvent<HTMLElement>) => void;
+  liClickHandler: (event: React.MouseEvent<HTMLElement>, n?: number) => void;
   dataArray: T[];
 }
 
