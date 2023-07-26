@@ -6,8 +6,8 @@ type MemoItemProps = {
 };
 function MemoItem({ item }: MemoItemProps) {
   const hours =
-    item.sendTime.getHours() % 12 ? item.sendTime.getHours() % 12 : 12;
-  const ampm = item.sendTime.getHours() >= 12 ? "PM" : "AM";
+    new Date(item.sendTime).getHours() % 12 ? new Date(item.sendTime).getHours() % 12 : 12;
+  const ampm = new Date(item.sendTime).getHours() >= 12 ? "PM" : "AM";
   return (
     <Li>
       <ChatText>
@@ -16,7 +16,7 @@ function MemoItem({ item }: MemoItemProps) {
       <TimeSpan>
         {String(hours).padStart(2, "0") +
           ":" +
-          String(item.sendTime.getMinutes()).padStart(2, "0") +
+          String(new Date(item.sendTime).getMinutes()).padStart(2, "0") +
           " " +
           ampm}
       </TimeSpan>
