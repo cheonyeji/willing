@@ -1,5 +1,21 @@
 import { atom, selector, selectorFamily } from "recoil";
+
 import { isSameDate } from "../utils/RecoilFunctions";
+
+const localStorageEffect = (key:string) => ({setSelf, onSet}: any) => {
+  const savedValue = localStorage.getItem(key)
+  // setSelf : Callbacks to set or reset the value of the atom.
+  if (savedValue != null) {
+    setSelf(JSON.parse(savedValue));
+  }
+  // onSet : Subscribe to changes in the atom value.
+  onSet((newValue:any, _:any, isReset:any) => {
+    isReset
+      ? localStorage.removeItem(key)
+      : localStorage.setItem(key, JSON.stringify(newValue));
+  });
+};
+
 
 /* 선택된 날짜 State */
 // 서비스 시작 화면은 오늘날짜, 날짜 기준 수정 가능
@@ -7,6 +23,7 @@ const today = new Date();
 export const selectedDateState = atom<Date>({
   key: "selectedDateState",
   default: today,
+  effects: [localStorageEffect('selected_date')]
 });
 
 /* ToDo Group State */
@@ -21,6 +38,7 @@ export interface IGroup {
 export const groupsState = atom<IGroup[]>({
   key: "groupsState",
   default: [{ id: 0, title: "DEFAULT", color: "#707070" }],
+  effects: [localStorageEffect('groups')]
 });
 
 // return groupColor code (find by groupId). use selectorFamily for parameter
@@ -60,6 +78,7 @@ export interface IToDo {
 export const toDosState = atom<IToDo[]>({
   key: "toDosState",
   default: [],
+  effects: [localStorageEffect('todos')]
 });
 
 export const toDosByDateSelector = selector({
@@ -86,6 +105,7 @@ export interface IMemo {
 export const memosState = atom<IMemo[]>({
   key: "memosState",
   default: [],
+  effects: [localStorageEffect('memos')]
 });
 
 // 날짜에 맞는 메모
