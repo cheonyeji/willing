@@ -4,12 +4,19 @@ import { selectedDateState } from "../../models/atoms";
 import IconYesterday from "../icons/IconYesterday";
 import IconTomorrow from "../icons/IconTomorrow";
 import { isSameDate } from "../../utils/RecoilFunctions";
+import { useEffect } from "react";
 
 function ToDoHeader() {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
+  
+  // Set default date to today
+  useEffect(() => {
+    setSelectedDate(new Date());
+  }, []);
+  
   const dateString = isSameDate(selectedDate, new Date())
     ? "오늘의 할일"
-    : selectedDate.toLocaleDateString("ko-KR", {
+    : new Date(selectedDate).toLocaleDateString("ko-KR", {
         // year: "numeric",
         month: "long",
         day: "numeric",
