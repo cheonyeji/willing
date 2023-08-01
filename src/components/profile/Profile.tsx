@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 39px;
-  @media (max-width: 768px) {
+  @media (max-width:1200px) {
     margin-bottom: 0px;
    height: 130px;
   
@@ -35,7 +35,7 @@ const ProfileImg = styled.div`
   background-size: cover;
   background-position: center center;
   margin-bottom: 17px;
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     width: 63px;
    height: 63px;
    }
@@ -43,7 +43,7 @@ const ProfileImg = styled.div`
 
 const ProfileText = styled.span`
   font-size: 14px;
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
  display: none;
  
   }

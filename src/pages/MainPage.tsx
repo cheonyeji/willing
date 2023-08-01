@@ -83,7 +83,7 @@ const Wrapper = styled.div`
   gap: 30px;
   /* height:100vh; */
 /* 배경 */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -100,7 +100,7 @@ const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
   border-radius: 7px;
  
   /* 리스트 */
-  @media (max-width: 768px) {
+  @media (max-width:1200px) {
     
     flex-direction: column;
     height: 100vh; 
@@ -130,7 +130,7 @@ const RightSidePageWrapper = styled((props: pageProps) => (
  
 
   /* 달력/채팅 */
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     margin-left: 30px;
     margin-right: 30px;
     flex-direction: column-reverse;
@@ -149,7 +149,7 @@ const LeftSidePageWrapper = styled((props: pageProps) => (
   overflow-y: auto;
  
   /* 프로필 */
-  @media (max-width: 768px) {
+  @media (max-width:1200px) {
     
     flex-direction: row;
     display: flex;

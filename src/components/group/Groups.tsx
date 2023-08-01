@@ -20,7 +20,7 @@ const Ul = styled.ul`
   padding: 0;
   overflow-y: auto;
  
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
    
   background:none;
   flex-direction: row;

@@ -59,7 +59,7 @@ const Form = styled.form`
   margin-right: 13px;
   background-color:none;
   flex-grow: 1;
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
      align-items:center; 
    
     margin-bottom: 0px;
@@ -73,7 +73,7 @@ const Input = styled.input`
   padding: 5px 0px;
   font-size: 12px;
   color: #929292;
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
    
    background-color:transparent;
      

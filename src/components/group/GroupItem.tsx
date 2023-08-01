@@ -24,7 +24,7 @@ const Item = styled.li`
   margin-left: 13px;
   margin-right: 13px;
 
- @media (max-width: 768px) {
+ @media (max-width: 1200px) {
  
   margin-bottom: 0px;
   margin-bottom: 0px;
