@@ -121,7 +121,7 @@ const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
 const RightSidePageWrapper = styled((props: pageProps) => (
   <RightSidePage {...props} />
 ))`
-  margin: 30px 0;
+  margin: 0px 0;
   grid-column: 10/13;
   margin-right: 30px;
   display: flex;
@@ -133,7 +133,7 @@ const RightSidePageWrapper = styled((props: pageProps) => (
   @media (max-width: 768px) {
     margin-left: 30px;
     margin-right: 30px;
-   
+    flex-direction: column-reverse;
     
   }
 
