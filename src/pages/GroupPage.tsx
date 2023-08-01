@@ -17,4 +17,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  @media (max-width: 768px) {
+  
+   
+   
+    flex-direction:row ;
+    display: flex;
+   
+   
+ 
+}
 `;

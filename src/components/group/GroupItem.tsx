@@ -23,6 +23,15 @@ const Item = styled.li`
   margin-bottom: 18px;
   margin-left: 13px;
   margin-right: 13px;
+
+ @media (max-width: 768px) {
+ 
+  margin-bottom: 0px;
+  margin-bottom: 0px;
+  display: flex;
+
+  
+  }
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`
@@ -31,4 +40,5 @@ const ColorCircle = styled.div<{ colorstring: string }>`
   border-radius: 50%;
   background-color: ${(props) => props.colorstring};
   margin-right: 8px;
+  
 `;
