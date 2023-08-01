@@ -88,7 +88,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     gap: 0;
    height:100%;
-   
+
   }
 
 `;
@@ -101,13 +101,16 @@ const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
  
   /* 리스트 */
   @media (max-width: 768px) {
-    width: 700px;
+    
     flex-direction: column;
     height: 100vh; 
-    margin-left: 30px;
-    margin-right: 30px;
-   margin-top: 0;
+    
+   margin-top: 30px;
    margin-bottom:0;
+ 
+   margin-left: 30px;
+    margin-right: 30px;
+   
   }
 
   
@@ -128,12 +131,10 @@ const RightSidePageWrapper = styled((props: pageProps) => (
 
   /* 달력/채팅 */
   @media (max-width: 768px) {
-    width: 700px;
-   
     margin-left: 30px;
     margin-right: 30px;
-  
-
+   
+    
   }
 
 `;
@@ -146,20 +147,21 @@ const LeftSidePageWrapper = styled((props: pageProps) => (
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-
+ 
   /* 프로필 */
   @media (max-width: 768px) {
-    width: 700px;
-  
+    
     flex-direction: row;
     display: flex;
     height: 130px;
+    /* align-items: center; */
+    
+    overflow-y:hidden;
     background-color:white;
-    align-items: center;
     margin-left: 30px;
     margin-right: 30px;
-    overflow-y:hidden;
-    background-color: transparent;
+     margin-top: 30px;
+     border-radius: 7px;
 }
 
   

@@ -12,7 +12,7 @@ function Profile() {
 export default Profile;
 
 const Wrapper = styled.div`
-  margin-top: 50px;
+  margin-top: 34px;
   display: flex;
   flex-direction: column;
   align-items: center;
