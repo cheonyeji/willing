@@ -20,9 +20,10 @@ const ShowCalendarWrapper = styled((props: pageProps) => (
 ))`
   background-color: #ffffff;
   border-radius: 7px;
-  margin-bottom: 30px;
+   margin-bottom: 30px; 
   @media (max-width: 768px) {
-  height: 100vh;
+    margin-bottom: 0px; 
+    margin-top: 30px;
   }
 `;
 
@@ -31,6 +32,7 @@ const MemoPageWrapper = styled((props: pageProps) => <MemoPage {...props} />)`
   border-radius: 7px;
   @media (max-width: 768px) {
     height: 100vh;
+   
   }
 `;
 
