@@ -20,19 +20,19 @@ const ShowCalendarWrapper = styled((props: pageProps) => (
 ))`
   background-color: #ffffff;
   border-radius: 7px;
-   margin-bottom: 30px; 
+  margin-bottom: 30px;
+  margin-top: 30px;
   @media (max-width: 1200px) {
-    margin-bottom: 30px; 
-    margin-top: 30px;
+    margin-bottom: 35px;
+    margin-top: 0px;
   }
 `;
 
 const MemoPageWrapper = styled((props: pageProps) => <MemoPage {...props} />)`
   background-color: #ffffff;
   border-radius: 7px;
+  margin-bottom: 30px;
   @media (max-width: 1200px) {
     height: 100vh;
-   
   }
 `;
-

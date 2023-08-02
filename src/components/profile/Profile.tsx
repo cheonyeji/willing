@@ -17,13 +17,13 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 39px;
-  @media (max-width:1200px) {
-    margin-bottom: 0px;
-   height: 130px;
-  
-margin-left:30px;
-margin-right:10px;}
-  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-bottom: -30px;
+    margin-left: 30px;
+    margin-right: 8px;
+    height: 130px;
+  }
 `;
 
 const ProfileImg = styled.div`
@@ -35,16 +35,16 @@ const ProfileImg = styled.div`
   background-size: cover;
   background-position: center center;
   margin-bottom: 17px;
-  @media (max-width: 1200px) {
+  @media (max-width: 768px) {
     width: 63px;
-   height: 63px;
-   }
+    height: 63px;
+  }
 `;
 
 const ProfileText = styled.span`
   font-size: 14px;
-  @media (max-width: 1200px) {
- display: none;
- 
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;

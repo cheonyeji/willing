@@ -12,5 +12,4 @@ function SidebarPage(props: pageProps) {
   );
 }
 
-
 export default SidebarPage;

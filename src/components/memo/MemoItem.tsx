@@ -6,7 +6,9 @@ type MemoItemProps = {
 };
 function MemoItem({ item }: MemoItemProps) {
   const hours =
-    new Date(item.sendTime).getHours() % 12 ? new Date(item.sendTime).getHours() % 12 : 12;
+    new Date(item.sendTime).getHours() % 12
+      ? new Date(item.sendTime).getHours() % 12
+      : 12;
   const ampm = new Date(item.sendTime).getHours() >= 12 ? "PM" : "AM";
   return (
     <Li>
@@ -31,14 +33,12 @@ const Li = styled.li`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
 `;
 
 const ChatText = styled.div`
   background-color: #f0f5fc;
   border-radius: 30px 30px 1px 30px;
   margin: 8px;
-  
 `;
 
 const TimeSpan = styled.span`

@@ -57,13 +57,11 @@ const Form = styled.form`
   margin-bottom: 18px;
   margin-left: 13px;
   margin-right: 13px;
-  background-color:none;
+  background-color: none;
   flex-grow: 1;
-  @media (max-width: 1200px) {
-     align-items:center; 
-   
+  @media (max-width: 768px) {
+    align-items: center;
     margin-bottom: 0px;
-
   }
 `;
 
@@ -74,12 +72,9 @@ const Input = styled.input`
   font-size: 12px;
   color: #929292;
   @media (max-width: 1200px) {
-   
-   background-color:transparent;
-     
-   
+    background-color: transparent;
   }
-  
+
   &:focus {
     outline: none;
     color: #000;
