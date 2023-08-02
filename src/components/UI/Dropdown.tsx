@@ -41,6 +41,7 @@ const Ul = styled.ul<{ visible: boolean }>`
   background-color: #ffffff;
   box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
   max-width: 160px;
+  z-index: 3;
 `;
 
 const ColorCircle = styled.div<{ colorstring: string }>`
