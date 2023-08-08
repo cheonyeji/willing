@@ -4,7 +4,7 @@ export interface IColor {
   color: string;
 }
 
-export const colors = <IColor[]>[
+export const colors: IColor[] = [
   { id: 0, color: "#AEE4FF" },
   { id: 1, color: "#e1aeff" },
   { id: 2, color: "#6bd2bf" },
