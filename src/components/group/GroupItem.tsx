@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useState } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import IconKebap from "../icons/IconKebap";

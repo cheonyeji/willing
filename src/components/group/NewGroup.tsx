@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { groupsState } from "../../models/atoms";
-
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+
+import { groupsState } from "../../models/atoms";
 import SelectColor from "./SelectColor";
 import { getColorItemById } from "../../models/colorArr";
 

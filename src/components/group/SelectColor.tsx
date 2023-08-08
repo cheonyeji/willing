@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+
 import IconSelectUp from "../icons/IconSelectUp";
 import IconSelectDown from "../icons/IconSelectDown";
 import Dropdown from "../UI/Dropdown";
-import { useRecoilValue } from "recoil";
 import { IColor, colors, getColorItemById } from "../../models/colorArr";
 
 type SelectColorProps = {

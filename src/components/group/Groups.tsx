@@ -1,7 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { groupsState } from "../../models/atoms";
-import GroupItem from "./GroupItem";
 import { styled } from "styled-components";
+
+import GroupItem from "./GroupItem";
+import { groupsState } from "../../models/atoms";
 
 function Groups() {
   const groups = useRecoilValue(groupsState);
