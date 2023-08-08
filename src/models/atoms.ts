@@ -1,6 +1,7 @@
 import { atom, selector, selectorFamily } from "recoil";
 
 import { isSameDate } from "../utils/RecoilFunctions";
+import Group from "./group";
 
 const localStorageEffect =
   (key: string) =>
@@ -33,12 +34,13 @@ export interface IGroup {
   id: number;
   title: string;
   color: string;
+  completed: boolean;
 }
 
 // ToDo Group
 export const groupsState = atom<IGroup[]>({
   key: "groupsState",
-  default: [{ id: 0, title: "DEFAULT", color: "#707070" }],
+  default: [new Group(0, "DEFAULT", "#707070")],
   effects: [localStorageEffect("groups")],
 });
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { IGroup, groupsState } from "../../models/atoms";
+import Group from "../../models/group";
 
 type EditTextProps = {
   text: string;
@@ -31,11 +32,11 @@ function EditText(props: EditTextProps) {
         findSameId(element, props.itemId)
       );
 
-      const modifiedGroup = {
-        id: prevGroups[targetIndex].id,
-        color: prevGroups[targetIndex].color,
-        title: inputText,
-      };
+      const modifiedGroup = new Group(
+        prevGroups[targetIndex].id,
+        inputText,
+        prevGroups[targetIndex].color
+      );
 
       const newState = [...prevGroups];
       newState.splice(targetIndex, 1);

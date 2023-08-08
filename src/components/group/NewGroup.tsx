@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { groupsState } from "../../models/atoms";
 import SelectColor from "./SelectColor";
 import { getColorItemById } from "../../models/colorArr";
+import Group from "../../models/group";
 
 function NewGroup() {
   const [selectedColorIdState, setSelectedColorIdState] = useState(0);
@@ -24,11 +25,7 @@ function NewGroup() {
 
     setGroups((prev) => [
       ...prev,
-      {
-        color: colorItemById!.color,
-        id: Date.now(),
-        title: enteredText,
-      },
+      new Group(Date.now(), enteredText, colorItemById!.color),
     ]);
     groupInputRef.current!.value = "";
   };

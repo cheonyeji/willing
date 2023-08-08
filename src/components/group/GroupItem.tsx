@@ -8,6 +8,7 @@ import EditText from "./EditText";
 import Dropdown from "../UI/Dropdown";
 import { IGroup, groupsState } from "../../models/atoms";
 import { IColor, colors, getColorItemById } from "../../models/colorArr";
+import Group from "../../models/group";
 
 type IGroupItem = {
   item: IGroup;
@@ -38,11 +39,11 @@ function GroupItem({ item }: IGroupItem) {
         findSameId(element, item.id)
       );
 
-      const modifiedGroup = {
-        id: prevGroups[targetIndex].id,
-        color: colorItemById!.color,
-        title: prevGroups[targetIndex].title,
-      };
+      const modifiedGroup = new Group(
+        prevGroups[targetIndex].id,
+        prevGroups[targetIndex].title,
+        colorItemById!.color
+      );
 
       const newState = [...prevGroups];
       newState.splice(targetIndex, 1);
