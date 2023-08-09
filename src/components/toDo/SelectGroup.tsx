@@ -31,7 +31,7 @@ function SelectGroup(props: SelectGroupProps) {
   };
 
   return (
-    <Wrapper>
+    <Wrapper onMouseLeave={() => setIsUlVisible(false)}>
       <SelectBtn onClick={toggleSelect}>
         <ColorCircle colorstring={selectedGroupItem!.color} />
         <TitleSpan>{selectedGroupItem!.title}</TitleSpan>

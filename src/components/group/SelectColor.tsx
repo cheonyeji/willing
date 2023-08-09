@@ -24,7 +24,7 @@ function SelectColor(props: SelectColorProps) {
     setIsUlVisible(!isUlVisible);
   };
   return (
-    <Wrapper>
+    <Wrapper onMouseLeave={() => setIsUlVisible(false)}>
       <SelectBtn onClick={toggleSelect}>
         <ColorCircle colorstring={colorItemById!.color} />
         <IconWrapper>
