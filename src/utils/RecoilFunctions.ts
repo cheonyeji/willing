@@ -1,6 +1,7 @@
+import Group from "../models/group";
 import ToDo from "../models/todo";
 
-export const findSameId = (element: ToDo, targetId: number) => {
+export const findSameId = (element: ToDo | Group, targetId: number) => {
   if (element.id === targetId) {
     return true;
   }
