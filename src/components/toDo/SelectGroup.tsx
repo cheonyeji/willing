@@ -13,6 +13,8 @@ type SelectGroupProps = {
 
 function SelectGroup(props: SelectGroupProps) {
   const groups = useRecoilValue(groupsState);
+  const uncompletedGroups = groups.filter((group) => !group.completed);
+
   const [isUlVisible, setIsUlVisible] = useState<boolean>(false);
 
   const selectedGroupItem = useRecoilValue(
@@ -41,7 +43,7 @@ function SelectGroup(props: SelectGroupProps) {
         isUlVisible={isUlVisible}
         setIsUlVisible={setIsUlVisible}
         liClickHandler={liClickHandler}
-        dataArray={groups}
+        dataArray={uncompletedGroups}
       />
     </Wrapper>
   );

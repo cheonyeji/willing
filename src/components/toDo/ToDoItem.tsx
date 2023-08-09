@@ -26,12 +26,15 @@ type ToDoItemProps = {
 
 function ToDoItem({ item, index }: ToDoItemProps) {
   const groups = useRecoilValue(groupsState);
+  const uncompletedGroups = groups.filter((group) => !group.completed);
+
   const groupColorString = useRecoilValue(groupColorById(item.groupId));
+  const isOverTrashCan = useRecoilValue(isOverTrashCanState);
+
   const [isEdit, setIsEdit] = useState(false);
   const [isUlVisible, setIsUlVisible] = useState(false);
 
   const setToDos = useSetRecoilState(toDosState);
-  const isOverTrashCan = useRecoilValue(isOverTrashCanState);
 
   const toggleCheckbox = (isChecked: boolean) => {
     // 해당 item id 전체 요소에서 찾아서 바꾸기
@@ -146,7 +149,7 @@ function ToDoItem({ item, index }: ToDoItemProps) {
             liClickHandler={(e: React.MouseEvent<HTMLElement>) =>
               liClickHandler(e, item.id)
             }
-            dataArray={groups}
+            dataArray={uncompletedGroups}
           />
           <input
             type="checkbox"
