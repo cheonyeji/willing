@@ -15,8 +15,8 @@ type IGroupItem = {
 };
 
 function GroupItem({ item }: IGroupItem) {
-  const [isEdit, setIsEdit] = useState(false);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [isTextEdit, setIsTextEdit] = useState(false);
+  const [isColorDropdownVisible, setIsColorDropdownVisible] = useState(false);
   const [isEditDropdownVisible, setEditIsDropdownVisible] = useState(false);
 
   const setGroups = useSetRecoilState(groupsState);
@@ -26,8 +26,8 @@ function GroupItem({ item }: IGroupItem) {
   };
 
   const liClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    // +event.currentTarget.id 가지고 group의 요소 변경하기
     const colorItemById = getColorItemById(+event.currentTarget.id);
+
     // 해당 group id 전체 요소에서 찾아서 group Color 바꾸기
     setGroups((prevGroups) => {
       const findSameId = (element: IGroup, targetId: number) => {
@@ -51,28 +51,37 @@ function GroupItem({ item }: IGroupItem) {
 
       return newState;
     });
-    setIsDropdownVisible(!isDropdownVisible);
+    setIsColorDropdownVisible(!isColorDropdownVisible);
   };
 
   return (
     <Item
+      groupid={item.id}
+      isEdit={isTextEdit || isColorDropdownVisible}
       onMouseLeave={() => {
         setEditIsDropdownVisible(false);
+        setIsColorDropdownVisible(false);
       }}
     >
       <CircleTitleWrapper>
         <ColorCircle
           colorstring={item.color}
           onDoubleClick={() => {
-            setIsDropdownVisible(!isDropdownVisible);
+            setIsColorDropdownVisible(!isColorDropdownVisible);
+            setEditIsDropdownVisible(false);
           }}
         />
 
-        <TextSpan onDoubleClick={() => setIsEdit(!isEdit)}>
-          {isEdit ? (
+        <TextSpan
+          onDoubleClick={() => {
+            setIsTextEdit(!isTextEdit);
+            setEditIsDropdownVisible(false);
+          }}
+        >
+          {isTextEdit ? (
             <EditText
               text={item.title}
-              setIsEdit={setIsEdit}
+              setIsEdit={setIsTextEdit}
               itemId={item.id}
             />
           ) : (
@@ -82,15 +91,17 @@ function GroupItem({ item }: IGroupItem) {
       </CircleTitleWrapper>
 
       <Dropdown<IColor>
-        isUlVisible={isDropdownVisible}
-        setIsUlVisible={setIsDropdownVisible}
+        isUlVisible={isColorDropdownVisible}
+        setIsUlVisible={setIsColorDropdownVisible}
         liClickHandler={liClickHandler}
         dataArray={colors}
       />
 
       <IconKebapWrapper onClick={kebapClickHandler}>
         <IconKebap />
-        {isEditDropdownVisible && <EditDropdown />}
+        {isEditDropdownVisible && (
+          <EditDropdown groupId={item.id} groupCompleted={item.completed} />
+        )}
       </IconKebapWrapper>
     </Item>
   );
@@ -103,7 +114,7 @@ const IconKebapWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Item = styled.li`
+const Item = styled.li<{ groupid: number; isEdit: boolean }>`
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -113,7 +124,10 @@ const Item = styled.li`
   justify-content: space-between;
 
   &:hover > ${IconKebapWrapper} {
-    display: block;
+    display: ${(props) => {
+      if (props.groupid === 0 || props.isEdit) return "none";
+      else return "block";
+    }};
   }
 
   @media (max-width: 1200px) {
