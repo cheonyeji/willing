@@ -9,12 +9,14 @@ import Dropdown from "../UI/Dropdown";
 import { IGroup, groupsState } from "../../models/atoms";
 import { IColor, colors, getColorItemById } from "../../models/colorArr";
 import Group from "../../models/group";
+import { Draggable } from "react-beautiful-dnd";
 
 type IGroupItem = {
   item: IGroup;
+  index: number;
 };
 
-function GroupItem({ item }: IGroupItem) {
+function GroupItem({ item, index }: IGroupItem) {
   const [isTextEdit, setIsTextEdit] = useState(false);
   const [isColorDropdownVisible, setIsColorDropdownVisible] = useState(false);
   const [isEditDropdownVisible, setEditIsDropdownVisible] = useState(false);
@@ -42,7 +44,8 @@ function GroupItem({ item }: IGroupItem) {
       const modifiedGroup = new Group(
         prevGroups[targetIndex].id,
         prevGroups[targetIndex].title,
-        colorItemById!.color
+        colorItemById!.color,
+        prevGroups[targetIndex].completed
       );
 
       const newState = [...prevGroups];
@@ -55,55 +58,62 @@ function GroupItem({ item }: IGroupItem) {
   };
 
   return (
-    <Item
-      groupid={item.id}
-      isEdit={isTextEdit || isColorDropdownVisible}
-      onMouseLeave={() => {
-        setEditIsDropdownVisible(false);
-        setIsColorDropdownVisible(false);
-      }}
-    >
-      <CircleTitleWrapper>
-        <ColorCircle
-          colorstring={item.color}
-          onDoubleClick={() => {
-            setIsColorDropdownVisible(!isColorDropdownVisible);
+    <Draggable draggableId={item.id + ""} index={index}>
+      {(provided) => (
+        <Item
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          groupid={item.id}
+          isEdit={isTextEdit || isColorDropdownVisible}
+          onMouseLeave={() => {
             setEditIsDropdownVisible(false);
-          }}
-        />
-
-        <TextSpan
-          onDoubleClick={() => {
-            setIsTextEdit(!isTextEdit);
-            setEditIsDropdownVisible(false);
+            setIsColorDropdownVisible(false);
           }}
         >
-          {isTextEdit ? (
-            <EditText
-              text={item.title}
-              setIsEdit={setIsTextEdit}
-              itemId={item.id}
+          <CircleTitleWrapper>
+            <ColorCircle
+              colorstring={item.color}
+              onDoubleClick={() => {
+                setIsColorDropdownVisible(!isColorDropdownVisible);
+                setEditIsDropdownVisible(false);
+              }}
             />
-          ) : (
-            item.title
-          )}
-        </TextSpan>
-      </CircleTitleWrapper>
 
-      <Dropdown<IColor>
-        isUlVisible={isColorDropdownVisible}
-        setIsUlVisible={setIsColorDropdownVisible}
-        liClickHandler={liClickHandler}
-        dataArray={colors}
-      />
+            <TextSpan
+              onDoubleClick={() => {
+                setIsTextEdit(!isTextEdit);
+                setEditIsDropdownVisible(false);
+              }}
+            >
+              {isTextEdit ? (
+                <EditText
+                  text={item.title}
+                  setIsEdit={setIsTextEdit}
+                  itemId={item.id}
+                />
+              ) : (
+                item.title
+              )}
+            </TextSpan>
+          </CircleTitleWrapper>
 
-      <IconKebapWrapper onClick={kebapClickHandler}>
-        <IconKebap />
-        {isEditDropdownVisible && (
-          <EditDropdown groupId={item.id} groupCompleted={item.completed} />
-        )}
-      </IconKebapWrapper>
-    </Item>
+          <Dropdown<IColor>
+            isUlVisible={isColorDropdownVisible}
+            setIsUlVisible={setIsColorDropdownVisible}
+            liClickHandler={liClickHandler}
+            dataArray={colors}
+          />
+
+          <IconKebapWrapper onClick={kebapClickHandler}>
+            <IconKebap />
+            {isEditDropdownVisible && (
+              <EditDropdown groupId={item.id} groupCompleted={item.completed} />
+            )}
+          </IconKebapWrapper>
+        </Item>
+      )}
+    </Draggable>
   );
 }
 

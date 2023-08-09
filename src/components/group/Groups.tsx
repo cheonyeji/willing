@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 
 import GroupItem from "./GroupItem";
 import { groupsState } from "../../models/atoms";
+import { Droppable } from "react-beautiful-dnd";
 
 function Groups() {
   const groups = useRecoilValue(groupsState);
@@ -13,21 +14,34 @@ function Groups() {
   );
 
   return (
-    <Ul>
-      {uncompletedGroups &&
-        uncompletedGroups.map((groupItem) => (
-          <GroupItem key={groupItem.id} item={groupItem} />
-        ))}
-
-      {completedGroups.length !== 0 && <Hr />}
-      {completedGroups.length !== 0 && (
-        <CompletedTitle>Completed</CompletedTitle>
-      )}
-      {completedGroups.length !== 0 &&
-        completedGroups.map((groupItem) => (
-          <GroupItem key={groupItem.id} item={groupItem} />
-        ))}
-    </Ul>
+    <>
+      <Droppable droppableId="uncompletedGroups">
+        {(provided) => (
+          <Ul ref={provided.innerRef} {...provided.droppableProps}>
+            {uncompletedGroups &&
+              uncompletedGroups.map((groupItem, index) => (
+                <GroupItem key={groupItem.id} index={index} item={groupItem} />
+              ))}
+            {provided.placeholder}
+          </Ul>
+        )}
+      </Droppable>
+      <Droppable droppableId="completedGroups">
+        {(provided) => (
+          <Ul ref={provided.innerRef} {...provided.droppableProps}>
+            {completedGroups.length !== 0 && <Hr />}
+            {completedGroups.length !== 0 && (
+              <CompletedTitle>Completed</CompletedTitle>
+            )}
+            {completedGroups.length !== 0 &&
+              completedGroups.map((groupItem, index) => (
+                <GroupItem key={groupItem.id} index={index} item={groupItem} />
+              ))}
+            {provided.placeholder}
+          </Ul>
+        )}
+      </Droppable>
+    </>
   );
 }
 
