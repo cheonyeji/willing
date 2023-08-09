@@ -6,11 +6,11 @@ class Group implements IGroup {
   color: string;
   completed: boolean;
 
-  constructor(id: number, title: string, color: string) {
+  constructor(id: number, title: string, color: string, completed?: boolean) {
     this.id = id;
     this.title = title;
     this.color = color;
-    this.completed = false;
+    this.completed = completed ? completed : false;
   }
 }
 
