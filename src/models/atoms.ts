@@ -69,6 +69,12 @@ export const groupItemById = selectorFamily({
     },
 });
 
+/* ToDo component에서 선택된 그룹 id State */
+export const selectedGroupIdState = atom<number>({
+  key: "selectedGroupState",
+  default: 0,
+});
+
 /* ToDo State */
 // ToDo 요소의 설계도
 export interface IToDo {

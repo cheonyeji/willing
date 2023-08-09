@@ -1,32 +1,34 @@
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { IGroup, groupItemById, groupsState } from "../../models/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
+
+import {
+  IGroup,
+  groupItemById,
+  groupsState,
+  selectedGroupIdState,
+} from "../../models/atoms";
 import IconSelectDown from "../icons/IconSelectDown";
 import IconSelectUp from "../icons/IconSelectUp";
 import Dropdown from "../UI/Dropdown";
 
-type SelectGroupProps = {
-  selectedGroupId: number;
-  setSelectedGroupId: (n: number) => void;
-};
-
-function SelectGroup(props: SelectGroupProps) {
+function SelectGroup() {
   const groups = useRecoilValue(groupsState);
+
+  const [selectedGroupId, setSelectedGroupId] =
+    useRecoilState(selectedGroupIdState);
   const uncompletedGroups = groups.filter((group) => !group.completed);
 
   const [isUlVisible, setIsUlVisible] = useState<boolean>(false);
 
-  const selectedGroupItem = useRecoilValue(
-    groupItemById(props.selectedGroupId)
-  );
+  const selectedGroupItem = useRecoilValue(groupItemById(selectedGroupId));
 
   const toggleSelect = () => {
     setIsUlVisible(!isUlVisible);
   };
 
   const liClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    props.setSelectedGroupId(+event.currentTarget.id);
+    setSelectedGroupId(+event.currentTarget.id);
     setIsUlVisible(!isUlVisible);
   };
 
