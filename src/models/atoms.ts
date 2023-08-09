@@ -40,7 +40,10 @@ export interface IGroup {
 // ToDo Group
 export const groupsState = atom<IGroup[]>({
   key: "groupsState",
-  default: [new Group(0, "DEFAULT", "#707070")],
+  default: [
+    new Group(0, "DEFAULT", "#007FFF"),
+    new Group(-1, "DEDICATED", "#707070", true),
+  ],
   effects: [localStorageEffect("groups")],
 });
 
