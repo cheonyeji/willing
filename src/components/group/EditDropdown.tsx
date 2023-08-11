@@ -44,6 +44,20 @@ function EditDropdown(props: EditDropdownProps) {
 
       return newState;
     });
+
+    // selectedGroupIdState 요소가 만약 현재 group id인 경우 배열 받아와서 이전 데이터로 설정 (groupId : 0인 요소는 삭제불가라 무조건 존재)
+    setSelectedGroupIdState((prevGroupId) => {
+      if (prevGroupId === props.groupId) {
+        const targetIndex = groups.findIndex(
+          (group) => group.id === props.groupId
+        );
+        return targetIndex > 0 && groups[targetIndex - 1]!.id !== -1
+          ? groups[targetIndex - 1]!.id
+          : 0;
+      } else {
+        return prevGroupId;
+      }
+    });
   };
 
   const removeClickHandler = () => {
