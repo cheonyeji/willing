@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 import IconKebap from "../icons/IconKebap";
 import EditDropdown from "./EditDropdown";
 import EditText from "./EditText";
 import Dropdown from "../UI/Dropdown";
-import { IGroup, groupsState } from "../../models/atoms";
+import { IGroup, groupsState, isOverCompletedState } from "../../models/atoms";
 import { IColor, colors, getColorItemById } from "../../models/colorArr";
 import Group from "../../models/group";
 import { Draggable } from "react-beautiful-dnd";
@@ -21,6 +21,7 @@ function GroupItem({ item, index }: IGroupItem) {
   const [isColorDropdownVisible, setIsColorDropdownVisible] = useState(false);
   const [isEditDropdownVisible, setEditIsDropdownVisible] = useState(false);
 
+  const isOverCompleted = useRecoilValue(isOverCompletedState);
   const setGroups = useSetRecoilState(groupsState);
 
   const kebapClickHandler = () => {
@@ -59,13 +60,16 @@ function GroupItem({ item, index }: IGroupItem) {
 
   return (
     <Draggable draggableId={item.id + ""} index={index}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <Item
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           groupid={item.id}
           isEdit={isTextEdit || isColorDropdownVisible}
+          isDragging={snapshot.isDragging}
+          isOverCompleted={isOverCompleted}
+          itemId={item.id}
           onMouseLeave={() => {
             setEditIsDropdownVisible(false);
             setIsColorDropdownVisible(false);
@@ -124,7 +128,15 @@ const IconKebapWrapper = styled.div`
   cursor: pointer;
 `;
 
-const Item = styled.li<{ groupid: number; isEdit: boolean }>`
+interface IItem {
+  groupid: number;
+  isEdit: boolean;
+  isDragging: boolean;
+  isOverCompleted: boolean;
+  itemId: number;
+}
+
+const Item = styled.li<IItem>`
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -132,6 +144,19 @@ const Item = styled.li<{ groupid: number; isEdit: boolean }>`
   margin-left: 13px;
   margin-right: 13px;
   justify-content: space-between;
+
+  background-color: ${(props) => {
+    if (props.isOverCompleted && props.isDragging && props.itemId === 0)
+      return "#d16262b4";
+    else if (props.isOverCompleted && props.isDragging) return "#CAE2FE80";
+    else return "";
+  }};
+
+  color: ${(props) => {
+    if (props.isOverCompleted && props.isDragging && props.itemId === 0)
+      return "#ffffff";
+    else return "#000000";
+  }};
 
   &:hover > ${IconKebapWrapper} {
     display: ${(props) => {
