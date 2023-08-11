@@ -26,7 +26,7 @@ function SelectColor(props: SelectColorProps) {
   return (
     <Wrapper onMouseLeave={() => setIsUlVisible(false)}>
       <SelectBtn onClick={toggleSelect}>
-        <ColorCircle colorstring={colorItemById!.color} />
+        <ColorCircle $colorstring={colorItemById!.color} />
         <IconWrapper>
           {isUlVisible ? <IconSelectUp /> : <IconSelectDown />}
         </IconWrapper>
@@ -55,11 +55,11 @@ const SelectBtn = styled.span`
   padding: 8px 0;
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 10px;
   min-height: 10px;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
 `;
 
 const IconWrapper = styled.div`

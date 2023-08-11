@@ -35,7 +35,7 @@ function SelectGroup() {
   return (
     <Wrapper onMouseLeave={() => setIsUlVisible(false)}>
       <SelectBtn onClick={toggleSelect}>
-        <ColorCircle colorstring={selectedGroupItem!.color} />
+        <ColorCircle $colorstring={selectedGroupItem!.color} />
         <TitleSpan>{selectedGroupItem!.title}</TitleSpan>
         <IconWrapper>
           {isUlVisible ? <IconSelectUp /> : <IconSelectDown />}
@@ -68,11 +68,11 @@ const SelectBtn = styled.span`
   height: 31px;
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 10px;
   min-height: 10px;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
   margin: 8px;
 `;
 

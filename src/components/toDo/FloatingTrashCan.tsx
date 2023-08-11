@@ -10,8 +10,8 @@ function FloatingTrashCan() {
     <Droppable droppableId="trashcan">
       {(provided, snapshot) => (
         <IconWrapper
-          isDraggingOver={snapshot.isDraggingOver}
-          dragging={isDragging}
+          $isdraggingover={snapshot.isDraggingOver}
+          $dragging={isDragging}
           ref={provided.innerRef}
           {...provided.droppableProps}
         >
@@ -25,8 +25,8 @@ function FloatingTrashCan() {
 export default FloatingTrashCan;
 
 interface Idiv {
-  dragging: boolean;
-  isDraggingOver: boolean;
+  $dragging: boolean;
+  $isdraggingover: boolean;
 }
 
 const fadeIn = keyframes`
@@ -67,7 +67,7 @@ const IconWrapper = styled.div<Idiv>`
   z-index: 5;
   transition: visibility 0.2s;
   background-color: ${(props) =>
-    props.isDraggingOver ? "#e67a68" : "#ea9688"};
-  visibility: ${(props) => (props.dragging ? "visible" : "hidden")};
-  animation: ${(props) => (props.dragging ? fadeIn : fadeOut)} 0.2s;
+    props.$isdraggingover ? "#e67a68" : "#ea9688"};
+  visibility: ${(props) => (props.$dragging ? "visible" : "hidden")};
+  animation: ${(props) => (props.$dragging ? fadeIn : fadeOut)} 0.2s;
 `;

@@ -65,11 +65,10 @@ function GroupItem({ item, index }: IGroupItem) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          groupid={item.id}
-          isEdit={isTextEdit || isColorDropdownVisible}
-          isDragging={snapshot.isDragging}
-          isOverCompleted={isOverCompleted}
-          itemId={item.id}
+          $groupid={item.id}
+          $isedit={isTextEdit || isColorDropdownVisible}
+          $isdragging={snapshot.isDragging}
+          $isovercompleted={isOverCompleted}
           onMouseLeave={() => {
             setEditIsDropdownVisible(false);
             setIsColorDropdownVisible(false);
@@ -77,7 +76,7 @@ function GroupItem({ item, index }: IGroupItem) {
         >
           <CircleTitleWrapper>
             <ColorCircle
-              colorstring={item.color}
+              $colorstring={item.color}
               onDoubleClick={() => {
                 setIsColorDropdownVisible(!isColorDropdownVisible);
                 setEditIsDropdownVisible(false);
@@ -129,11 +128,10 @@ const IconKebapWrapper = styled.div`
 `;
 
 interface IItem {
-  groupid: number;
-  isEdit: boolean;
-  isDragging: boolean;
-  isOverCompleted: boolean;
-  itemId: number;
+  $groupid: number;
+  $isedit: boolean;
+  $isdragging: boolean;
+  $isovercompleted: boolean;
 }
 
 const Item = styled.li<IItem>`
@@ -146,21 +144,21 @@ const Item = styled.li<IItem>`
   justify-content: space-between;
 
   background-color: ${(props) => {
-    if (props.isOverCompleted && props.isDragging && props.itemId === 0)
+    if (props.$isovercompleted && props.$isdragging && props.$groupid === 0)
       return "#d16262b4";
-    else if (props.isOverCompleted && props.isDragging) return "#CAE2FE80";
+    else if (props.$isovercompleted && props.$isdragging) return "#CAE2FE80";
     else return "";
   }};
 
   color: ${(props) => {
-    if (props.isOverCompleted && props.isDragging && props.itemId === 0)
+    if (props.$isovercompleted && props.$isdragging && props.$groupid === 0)
       return "#ffffff";
     else return "#000000";
   }};
 
   &:hover > ${IconKebapWrapper} {
     display: ${(props) => {
-      if (props.groupid === 0 || props.isEdit) return "none";
+      if (props.$groupid === 0 || props.$isedit) return "none";
       else return "block";
     }};
   }
@@ -186,13 +184,13 @@ const CircleTitleWrapper = styled.div`
   flex-grow: 1;
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 0.8em;
   min-height: 0.8em;
   width: 0.8em;
   height: 0.8em;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
   margin-right: 8px;
 `;
 

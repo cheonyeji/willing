@@ -125,7 +125,7 @@ function ToDoItem({ item, index }: ToDoItemProps) {
         >
           <ItemText>
             <ColorCircle
-              colorstring={groupColorString}
+              $colorstring={groupColorString}
               onDoubleClick={() => {
                 setIsUlVisible(!isUlVisible);
               }}
@@ -189,11 +189,11 @@ const ItemCard = styled.li<ICard>`
   color: ${(props) => (props.isDone ? "#929292" : "#000000")};
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 1em;
   min-height: 1em;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
   margin-right: 12px;
 `;
 
