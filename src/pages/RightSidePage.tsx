@@ -34,5 +34,6 @@ const MemoPageWrapper = styled((props: pageProps) => <MemoPage {...props} />)`
   margin-bottom: 30px;
   @media (max-width: 1200px) {
     height: 100vh;
+    word-wrap: break-word;
   }
 `;
