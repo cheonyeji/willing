@@ -104,7 +104,6 @@ const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
 
   /* 리스트 */
   @media (max-width: 1200px) {
-    /* height: 100vh; */
     margin-top: 30px;
     margin-bottom: 30px;
     margin-right: 30px;
