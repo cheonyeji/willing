@@ -1,37 +1,41 @@
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { IGroup, groupItemById, groupsState } from "../../models/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { styled } from "styled-components";
+
+import {
+  IGroup,
+  groupItemById,
+  groupsState,
+  selectedGroupIdState,
+} from "../../models/atoms";
 import IconSelectDown from "../icons/IconSelectDown";
 import IconSelectUp from "../icons/IconSelectUp";
 import Dropdown from "../UI/Dropdown";
 
-type SelectGroupProps = {
-  selectedGroupId: number;
-  setSelectedGroupId: (n: number) => void;
-};
-
-function SelectGroup(props: SelectGroupProps) {
+function SelectGroup() {
   const groups = useRecoilValue(groupsState);
+
+  const [selectedGroupId, setSelectedGroupId] =
+    useRecoilState(selectedGroupIdState);
+  const uncompletedGroups = groups.filter((group) => !group.completed);
+
   const [isUlVisible, setIsUlVisible] = useState<boolean>(false);
 
-  const selectedGroupItem = useRecoilValue(
-    groupItemById(props.selectedGroupId)
-  );
+  const selectedGroupItem = useRecoilValue(groupItemById(selectedGroupId));
 
   const toggleSelect = () => {
     setIsUlVisible(!isUlVisible);
   };
 
   const liClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    props.setSelectedGroupId(+event.currentTarget.id);
+    setSelectedGroupId(+event.currentTarget.id);
     setIsUlVisible(!isUlVisible);
   };
 
   return (
-    <Wrapper>
+    <Wrapper onMouseLeave={() => setIsUlVisible(false)}>
       <SelectBtn onClick={toggleSelect}>
-        <ColorCircle colorstring={selectedGroupItem!.color} />
+        <ColorCircle $colorstring={selectedGroupItem!.color} />
         <TitleSpan>{selectedGroupItem!.title}</TitleSpan>
         <IconWrapper>
           {isUlVisible ? <IconSelectUp /> : <IconSelectDown />}
@@ -41,7 +45,7 @@ function SelectGroup(props: SelectGroupProps) {
         isUlVisible={isUlVisible}
         setIsUlVisible={setIsUlVisible}
         liClickHandler={liClickHandler}
-        dataArray={groups}
+        dataArray={uncompletedGroups}
       />
     </Wrapper>
   );
@@ -64,11 +68,11 @@ const SelectBtn = styled.span`
   height: 31px;
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 10px;
   min-height: 10px;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
   margin: 8px;
 `;
 
