@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+
 import IconSelectUp from "../icons/IconSelectUp";
 import IconSelectDown from "../icons/IconSelectDown";
 import Dropdown from "../UI/Dropdown";
-import { IColor, colorItemByIdSelector, colorsState } from "../../models/atoms";
-import { useRecoilValue } from "recoil";
+import { IColor, colors, getColorItemById } from "../../models/colorArr";
 
 type SelectColorProps = {
   selectedColorIdState: number;
@@ -12,11 +12,9 @@ type SelectColorProps = {
 };
 
 function SelectColor(props: SelectColorProps) {
-  const colors = useRecoilValue(colorsState);
   const [isUlVisible, setIsUlVisible] = useState(false);
-  const colorItemById = useRecoilValue(
-    colorItemByIdSelector(props.selectedColorIdState)
-  );
+  const colorItemById = getColorItemById(props.selectedColorIdState);
+
   const toggleSelect = () => {
     setIsUlVisible(!isUlVisible);
   };
@@ -26,9 +24,9 @@ function SelectColor(props: SelectColorProps) {
     setIsUlVisible(!isUlVisible);
   };
   return (
-    <Wrapper>
+    <Wrapper onMouseLeave={() => setIsUlVisible(false)}>
       <SelectBtn onClick={toggleSelect}>
-        <ColorCircle colorstring={colorItemById.color} />
+        <ColorCircle $colorstring={colorItemById!.color} />
         <IconWrapper>
           {isUlVisible ? <IconSelectUp /> : <IconSelectDown />}
         </IconWrapper>
@@ -57,11 +55,11 @@ const SelectBtn = styled.span`
   padding: 8px 0;
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 10px;
   min-height: 10px;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
 `;
 
 const IconWrapper = styled.div`

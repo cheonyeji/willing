@@ -15,14 +15,14 @@ interface DropdownProps<T> {
 
 function Dropdown<T extends DropdownAttrs>(props: DropdownProps<T>) {
   return (
-    <Ul visible={props.isUlVisible}>
+    <Ul $visible={props.isUlVisible}>
       {props.dataArray.map((data) => (
         <Li
           key={data.id}
           id={data.id.toString()}
           onClick={props.liClickHandler}
         >
-          <ColorCircle colorstring={data.color} />
+          <ColorCircle $colorstring={data.color} />
           {data.title ? <TextSpan>{data.title}</TextSpan> : ""}
         </Li>
       ))}
@@ -32,8 +32,8 @@ function Dropdown<T extends DropdownAttrs>(props: DropdownProps<T>) {
 
 export default Dropdown;
 
-const Ul = styled.ul<{ visible: boolean }>`
-  display: ${(props) => (props.visible ? "block" : "none")};
+const Ul = styled.ul<{ $visible: boolean }>`
+  display: ${(props) => (props.$visible ? "block" : "none")};
   list-style: none;
   padding: 4px;
   position: absolute;
@@ -41,13 +41,14 @@ const Ul = styled.ul<{ visible: boolean }>`
   background-color: #ffffff;
   box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
   max-width: 160px;
+  z-index: 3;
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 10px;
   min-height: 10px;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
   margin: 8px;
 `;
 

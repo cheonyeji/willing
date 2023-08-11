@@ -1,21 +1,23 @@
 import { atom, selector, selectorFamily } from "recoil";
 
 import { isSameDate } from "../utils/RecoilFunctions";
+import Group from "./group";
 
-const localStorageEffect = (key:string) => ({setSelf, onSet}: any) => {
-  const savedValue = localStorage.getItem(key)
-  // setSelf : Callbacks to set or reset the value of the atom.
-  if (savedValue != null) {
-    setSelf(JSON.parse(savedValue));
-  }
-  // onSet : Subscribe to changes in the atom value.
-  onSet((newValue:any, _:any, isReset:any) => {
-    isReset
-      ? localStorage.removeItem(key)
-      : localStorage.setItem(key, JSON.stringify(newValue));
-  });
-};
-
+const localStorageEffect =
+  (key: string) =>
+  ({ setSelf, onSet }: any) => {
+    const savedValue = localStorage.getItem(key);
+    // setSelf : Callbacks to set or reset the value of the atom.
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+    // onSet : Subscribe to changes in the atom value.
+    onSet((newValue: any, _: any, isReset: any) => {
+      isReset
+        ? localStorage.removeItem(key)
+        : localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
 
 /* 선택된 날짜 State */
 // 서비스 시작 화면은 오늘날짜, 날짜 기준 수정 가능
@@ -23,7 +25,7 @@ const today = new Date();
 export const selectedDateState = atom<Date>({
   key: "selectedDateState",
   default: today,
-  effects: [localStorageEffect('selected_date')]
+  effects: [localStorageEffect("selected_date")],
 });
 
 /* ToDo Group State */
@@ -32,13 +34,17 @@ export interface IGroup {
   id: number;
   title: string;
   color: string;
+  completed: boolean;
 }
 
 // ToDo Group
 export const groupsState = atom<IGroup[]>({
   key: "groupsState",
-  default: [{ id: 0, title: "DEFAULT", color: "#707070" }],
-  effects: [localStorageEffect('groups')]
+  default: [
+    new Group(-1, "DEDICATED", "#707070", true),
+    new Group(0, "DEFAULT", "#007FFF"),
+  ],
+  effects: [localStorageEffect("groups")],
 });
 
 // return groupColor code (find by groupId). use selectorFamily for parameter
@@ -63,6 +69,12 @@ export const groupItemById = selectorFamily({
     },
 });
 
+/* ToDo component에서 선택된 그룹 id State */
+export const selectedGroupIdState = atom<number>({
+  key: "selectedGroupState",
+  default: 0,
+});
+
 /* ToDo State */
 // ToDo 요소의 설계도
 export interface IToDo {
@@ -78,7 +90,7 @@ export interface IToDo {
 export const toDosState = atom<IToDo[]>({
   key: "toDosState",
   default: [],
-  effects: [localStorageEffect('todos')]
+  effects: [localStorageEffect("todos")],
 });
 
 export const toDosByDateSelector = selector({
@@ -105,7 +117,7 @@ export interface IMemo {
 export const memosState = atom<IMemo[]>({
   key: "memosState",
   default: [],
-  effects: [localStorageEffect('memos')]
+  effects: [localStorageEffect("memos")],
 });
 
 // 날짜에 맞는 메모
@@ -134,30 +146,8 @@ export const isOverTrashCanState = atom<boolean>({
   default: false,
 });
 
-/* 디폴트 색상 배열 */
-export interface IColor {
-  id: number;
-  color: string;
-}
-
-export const colorsState = atom<IColor[]>({
-  key: "colorsState",
-  default: [
-    { id: 0, color: "#AEE4FF" },
-    { id: 1, color: "#e1aeff" },
-    { id: 2, color: "#6bd2bf" },
-    { id: 3, color: "#bb8787" },
-    { id: 4, color: "#98ae6e" },
-  ],
-});
-
-// return color Item (find by colorId). use selectorFamily for parameter
-export const colorItemByIdSelector = selectorFamily({
-  key: "colorItemByIdSelector",
-  get:
-    (colorId: number) =>
-    ({ get }) => {
-      const colors = get(colorsState);
-      return colors.find((item) => item.id === colorId)!;
-    },
+/* Group 아이템이 Completed 위에 있는 여부 체크 (배경색 변경) */
+export const isOverCompletedState = atom<boolean>({
+  key: "isOverCompletedState",
+  default: false,
 });

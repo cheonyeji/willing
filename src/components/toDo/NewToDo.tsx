@@ -1,15 +1,21 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { selectedDateState, toDosState } from "../../models/atoms";
-import ToDo from "../../models/todo";
 import { styled } from "styled-components";
+
+import {
+  selectedDateState,
+  selectedGroupIdState,
+  toDosState,
+} from "../../models/atoms";
+import ToDo from "../../models/todo";
 import SelectGroup from "./SelectGroup";
 
 function NewToDo() {
-  const [selectedGroupId, setSelectedGroupId] = useState<number>(0);
   const todoInputRef = useRef<HTMLInputElement>(null);
-  const setTodosState = useSetRecoilState(toDosState);
+
   const selectedDate = useRecoilValue(selectedDateState);
+  const setTodosState = useSetRecoilState(toDosState);
+  const selectedGroupId = useRecoilValue(selectedGroupIdState);
 
   const sumbitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -33,10 +39,7 @@ function NewToDo() {
 
   return (
     <Wrapper>
-      <SelectGroup
-        selectedGroupId={selectedGroupId}
-        setSelectedGroupId={setSelectedGroupId}
-      />
+      <SelectGroup />
       <Form onSubmit={sumbitHandler}>
         <Input
           type="text"

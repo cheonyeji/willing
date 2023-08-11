@@ -26,12 +26,15 @@ type ToDoItemProps = {
 
 function ToDoItem({ item, index }: ToDoItemProps) {
   const groups = useRecoilValue(groupsState);
+  const uncompletedGroups = groups.filter((group) => !group.completed);
+
   const groupColorString = useRecoilValue(groupColorById(item.groupId));
+  const isOverTrashCan = useRecoilValue(isOverTrashCanState);
+
   const [isEdit, setIsEdit] = useState(false);
   const [isUlVisible, setIsUlVisible] = useState(false);
 
   const setToDos = useSetRecoilState(toDosState);
-  const isOverTrashCan = useRecoilValue(isOverTrashCanState);
 
   const toggleCheckbox = (isChecked: boolean) => {
     // 해당 item id 전체 요소에서 찾아서 바꾸기
@@ -122,7 +125,7 @@ function ToDoItem({ item, index }: ToDoItemProps) {
         >
           <ItemText>
             <ColorCircle
-              colorstring={groupColorString}
+              $colorstring={groupColorString}
               onDoubleClick={() => {
                 setIsUlVisible(!isUlVisible);
               }}
@@ -146,7 +149,7 @@ function ToDoItem({ item, index }: ToDoItemProps) {
             liClickHandler={(e: React.MouseEvent<HTMLElement>) =>
               liClickHandler(e, item.id)
             }
-            dataArray={groups}
+            dataArray={uncompletedGroups}
           />
           <input
             type="checkbox"
@@ -186,11 +189,11 @@ const ItemCard = styled.li<ICard>`
   color: ${(props) => (props.isDone ? "#929292" : "#000000")};
 `;
 
-const ColorCircle = styled.div<{ colorstring: string }>`
+const ColorCircle = styled.div<{ $colorstring: string }>`
   min-width: 1em;
   min-height: 1em;
   border-radius: 50%;
-  background-color: ${(props) => props.colorstring};
+  background-color: ${(props) => props.$colorstring};
   margin-right: 12px;
 `;
 
