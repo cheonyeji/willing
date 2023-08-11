@@ -81,7 +81,7 @@ const Wrapper = styled.div`
   height: 100vh;
   grid-template-columns: repeat(12, 1fr);
   gap: 30px;
-
+  background: #f0f5fc;
   /* 배경 */
   @media (max-width: 1200px) {
     display: flex;
@@ -104,6 +104,7 @@ const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
 
   /* 리스트 */
   @media (max-width: 1200px) {
+    /* height: 100vh; */
     margin-top: 30px;
     margin-bottom: 30px;
     margin-right: 30px;
@@ -160,6 +161,7 @@ const LeftSidePageWrapper = styled((props: pageProps) => (
     overflow-y: hidden;
     background-color: white;
     margin-right: 30px;
+    max-width: 360px;
 
     /* 프로필 */
   }
@@ -174,5 +176,6 @@ const LeftSidePageWrapper = styled((props: pageProps) => (
     margin-right: 30px;
     margin-top: 30px;
     border-radius: 7px;
+    max-width: 100%;
   }
 `;
