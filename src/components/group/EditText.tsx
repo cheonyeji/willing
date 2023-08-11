@@ -35,7 +35,8 @@ function EditText(props: EditTextProps) {
       const modifiedGroup = new Group(
         prevGroups[targetIndex].id,
         inputText,
-        prevGroups[targetIndex].color
+        prevGroups[targetIndex].color,
+        prevGroups[targetIndex].completed
       );
 
       const newState = [...prevGroups];
