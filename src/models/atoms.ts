@@ -41,8 +41,8 @@ export interface IGroup {
 export const groupsState = atom<IGroup[]>({
   key: "groupsState",
   default: [
-    new Group(0, "DEFAULT", "#007FFF"),
     new Group(-1, "DEDICATED", "#707070", true),
+    new Group(0, "DEFAULT", "#007FFF"),
   ],
   effects: [localStorageEffect("groups")],
 });
@@ -143,5 +143,11 @@ export const isDraggingState = atom<boolean>({
 /* 쓰레기통 위에 있는 여부 체크 (글자색 변경) */
 export const isOverTrashCanState = atom<boolean>({
   key: "isOverTrashCanState",
+  default: false,
+});
+
+/* Group 아이템이 Completed 위에 있는 여부 체크 (배경색 변경) */
+export const isOverCompletedState = atom<boolean>({
+  key: "isOverCompletedState",
   default: false,
 });
