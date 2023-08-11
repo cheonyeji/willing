@@ -10,6 +10,7 @@ function Groups() {
       {groups.map((groupItem) => (
         <GroupItem key={groupItem.id} item={groupItem} />
       ))}
+      <BtnWrapper></BtnWrapper>
     </Ul>
   );
 }
@@ -42,5 +43,20 @@ const Ul = styled.ul`
   &::-webkit-scrollbar-track {
     border-radius: 3px;
     background: #abcbfc3b; /* scrollbar background color*/
+  }
+`;
+const BtnWrapper = styled.div`
+  position: absolute;
+  top: 70%;
+  left: 20px;
+
+  display: flex;
+  gap: 10%;
+  z-index: 999;
+  @media (max-width: 1200px) {
+    left: 44px;
+  }
+  @media (max-width: 768px) {
+    left: 30px;
   }
 `;
