@@ -164,8 +164,6 @@ const Item = styled.li<IItem>`
   }
 
   @media (max-width: 1200px) {
-    margin-bottom: 0px;
-    margin-bottom: 0px;
     display: flex;
     margin-bottom: 18px;
     margin-left: 13px;

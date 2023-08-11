@@ -56,6 +56,8 @@ const Form = styled.form`
   margin-right: 13px;
   background-color: none;
   flex-grow: 1;
+  background-color: transparent;
+
   @media (max-width: 768px) {
     align-items: center;
     margin-bottom: 0px;
@@ -63,11 +65,11 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  width: 100%;
   border: none;
   padding: 5px 0px;
   font-size: 12px;
   color: #929292;
+
   @media (max-width: 1200px) {
     background-color: transparent;
   }
