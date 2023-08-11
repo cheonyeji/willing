@@ -1,17 +1,26 @@
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 
 import GroupItem from "./GroupItem";
 import { groupsState } from "../../models/atoms";
 import { Droppable } from "react-beautiful-dnd";
+import SelectCompleted from "./SelectCompleted";
 
 function Groups() {
   const groups = useRecoilValue(groupsState);
+  const [isUlVisible, setIsUlVisible] = useState(false);
 
   const uncompletedGroups = groups.filter((group) => !group.completed);
   const completedGroups = groups.filter(
     (group) => group.completed && group.id !== -1
   );
+
+  useEffect(() => {
+    if (completedGroups.length === 0) {
+      setIsUlVisible(false);
+    }
+  }, [completedGroups.length]);
 
   return (
     <>
@@ -26,14 +35,20 @@ function Groups() {
           </Ul>
         )}
       </Droppable>
+
       <Droppable droppableId="completedGroups">
         {(provided) => (
           <Ul ref={provided.innerRef} {...provided.droppableProps}>
             {completedGroups.length !== 0 && <Hr />}
             {completedGroups.length !== 0 && (
-              <CompletedTitle>Completed</CompletedTitle>
+              <SelectCompleted
+                isUlVisible={isUlVisible}
+                setIsUlVisible={setIsUlVisible}
+              />
             )}
+
             {completedGroups.length !== 0 &&
+              isUlVisible &&
               completedGroups.map((groupItem, index) => (
                 <GroupItem key={groupItem.id} index={index} item={groupItem} />
               ))}
@@ -83,10 +98,4 @@ const Hr = styled.hr`
   background: #b0b0b0;
   height: 1px;
   border: 0;
-`;
-
-const CompletedTitle = styled.div`
-  margin-bottom: 18px;
-  margin-left: 13px;
-  margin-right: 13px;
 `;
