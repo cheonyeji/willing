@@ -1,11 +1,14 @@
 import { styled } from "styled-components";
-import IconChat from "../components/icons/IconChat";
+import IconChat from "../icons/IconChat";
+import { useSetRecoilState } from "recoil";
+import { isMemoModalShown } from "../../models/atoms";
 
 function MemoBtn() {
-  function clickHandler() {}
+  const setIsMemoModalShown = useSetRecoilState(isMemoModalShown);
+
   return (
     <BtnWrap>
-      <Button onClick={clickHandler}>
+      <Button onClick={() => setIsMemoModalShown(true)}>
         <IconChat />
       </Button>
     </BtnWrap>
