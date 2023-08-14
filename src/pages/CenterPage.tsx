@@ -8,15 +8,18 @@ import ToDos from "../components/toDo/ToDos";
 import FloatingTrashCan from "../components/toDo/FloatingTrashCan";
 import {
   isDraggingState,
+  isModalShownState,
   isOverTrashCanState,
   toDosByDateSelector,
   toDosState,
 } from "../models/atoms";
 import { findSameId } from "../utils/RecoilFunctions";
+import MemoModal from "../components/modal/MemoModal";
+import CalendarModal from "../components/modal/CalendarModal";
 
-type ToDoPageProps = { className: string };
+type CenterPageProps = { className: string };
 
-function ToDoPage(props: ToDoPageProps) {
+function CenterPage(props: CenterPageProps) {
   const setTodos = useSetRecoilState(toDosState);
   const toDosByDate = useRecoilValue(toDosByDateSelector);
   const setIsDragging = useSetRecoilState(isDraggingState);
@@ -58,27 +61,46 @@ function ToDoPage(props: ToDoPageProps) {
     }
   };
 
+  const isModalShown = useRecoilValue(isModalShownState);
+  let content = <></>;
+  if (isModalShown === 1) {
+    content = <MemoModal />;
+  } else if (isModalShown === 2) {
+    content = <CalendarModal />;
+  }
   return (
-    <DragDropContext
-      onDragEnd={dragEndHandler}
-      onBeforeCapture={() => setIsDragging(true)}
-      onDragUpdate={(update) => {
-        update.destination?.droppableId === "trashcan"
-          ? setIsOverTrashCan(true)
-          : setIsOverTrashCan(false);
-      }}
-    >
-      <Wrapper className={props.className}>
-        <ToDoHeader />
-        <NewToDo />
-        <ToDos />
-        <FloatingTrashCan />
-      </Wrapper>
-    </DragDropContext>
+    <Wrap className={props.className}>
+      <DragDropContext
+        onDragEnd={dragEndHandler}
+        onBeforeCapture={() => setIsDragging(true)}
+        onDragUpdate={(update) => {
+          update.destination?.droppableId === "trashcan"
+            ? setIsOverTrashCan(true)
+            : setIsOverTrashCan(false);
+        }}
+      >
+        <Wrapper>
+          <ToDoHeader />
+          <NewToDo />
+          <ToDos />
+          <FloatingTrashCan />
+        </Wrapper>
+      </DragDropContext>
+      {isModalShown !== 0 && content}
+    </Wrap>
   );
 }
 
-export default ToDoPage;
+export default CenterPage;
+
+const Wrap = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+`;
 
 const Wrapper = styled.div`
   display: flex;
