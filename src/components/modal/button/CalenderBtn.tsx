@@ -1,14 +1,18 @@
 import { styled } from "styled-components";
-import IconCalender from "../icons/IconCalender";
-import { useSetRecoilState } from "recoil";
-import { isCalendarModalShown } from "../../models/atoms";
+import { useRecoilState } from "recoil";
+
+import IconCalender from "../../icons/IconCalender";
+import { isModalShownState } from "../../../models/atoms";
 
 function CalenderBtn() {
-  const setIsCalendarModalShown = useSetRecoilState(isCalendarModalShown);
+  const [isModalShown, setIsModalShown] = useRecoilState(isModalShownState);
+  const clickHandler = () => {
+    setIsModalShown(isModalShown ? 0 : 2);
+  };
 
   return (
     <BtnWrap>
-      <Button onClick={() => setIsCalendarModalShown(true)}>
+      <Button onClick={clickHandler}>
         <IconCalender />
       </Button>
     </BtnWrap>
