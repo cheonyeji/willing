@@ -59,7 +59,7 @@ const Form = styled.form`
 
 const Textarea = styled.textarea`
   border: none;
-  width: 90%;
+  width: 95%;
   background-color: transparent;
   resize: none;
   &:focus {
