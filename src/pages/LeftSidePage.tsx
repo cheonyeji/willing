@@ -27,6 +27,9 @@ const BtnWrapper = styled.div`
   display: flex;
   gap: 10%;
   z-index: 999;
+  @media (min-width: 1200px) {
+    display: none;
+  }
   @media (max-width: 1200px) {
     left: 30px;
   }
