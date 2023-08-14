@@ -65,8 +65,9 @@ const EditInput = styled.input`
   width: 100%;
   border: none;
   font-size: 12px;
-  border-bottom: 1px solid #00000067;
+  border-radius: 2px;
+  background-color: rgba(240, 245, 252, 1);
   &:focus {
-    outline: none;
+    outline: transparent;
   }
 `;
