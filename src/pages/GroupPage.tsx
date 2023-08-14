@@ -104,7 +104,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-
+  width: 100%;
   @media (max-width: 1200px) {
     flex-direction: column;
     display: flex;
@@ -114,4 +114,3 @@ const Wrapper = styled.div`
     display: flex;
   }
 `;
-
