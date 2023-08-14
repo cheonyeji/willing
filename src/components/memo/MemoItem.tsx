@@ -36,7 +36,7 @@ const Li = styled.li`
 `;
 
 const ChatText = styled.div`
-  background-color: #f0f5fc;
+  background-color: rgba(240, 245, 252, 1);
   border-radius: 30px 30px 1px 30px;
   margin: 8px;
 `;
