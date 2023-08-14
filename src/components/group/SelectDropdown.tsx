@@ -81,6 +81,7 @@ const Li = styled.li`
   display: flex;
   align-items: center;
   cursor: pointer;
+  background-color: #acdfff;
   &:hover {
     background-color: #cae2fe9c;
   }
