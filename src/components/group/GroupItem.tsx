@@ -137,22 +137,32 @@ interface IItem {
 const Item = styled.li<IItem>`
   font-size: 12px;
   display: flex;
+  padding: 5px;
   align-items: center;
   margin-bottom: 18px;
   margin-left: 13px;
   margin-right: 13px;
-  justify-content: space-between;
 
+  justify-content: space-between;
+  border-radius: 4px;
+  box-shadow: 0px 0px 4px 0px rgba(255, 255, 255, 0);
   background-color: ${(props) => {
     if (props.$isovercompleted && props.$isdragging && props.$groupid === 0)
-      return "#d16262b4";
+      return "#ffffff";
     else if (props.$isovercompleted && props.$isdragging) return "#CAE2FE80";
     else return "";
   }};
-
+  /* --------------테두리--------------------------------------- */
+  box-shadow: ${(props) => {
+    if (props.$isovercompleted && props.$isdragging && props.$groupid === 0)
+      return " 0px 0px 4px 0px rgba(255, 97, 97, 0.61);";
+    else if (props.$isovercompleted && props.$isdragging) return "#ffffff80";
+    else return "";
+  }};
+  /* --------------글자색--------------------------------------- */
   color: ${(props) => {
     if (props.$isovercompleted && props.$isdragging && props.$groupid === 0)
-      return "#ffffff";
+      return "#000000";
     else return "#000000";
   }};
 
