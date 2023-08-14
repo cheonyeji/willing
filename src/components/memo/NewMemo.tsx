@@ -38,7 +38,6 @@ function NewMemo() {
         autoComplete="off"
         ref={memoInputRef}
       ></Textarea>
-
       <Button type="submit">
         <IconPlus />
       </Button>
@@ -54,7 +53,6 @@ const Form = styled.form`
   display: flex;
   justify-content: stretch;
   align-items: center;
-
   border-bottom-left-radius: 7px;
   border-bottom-right-radius: 7px;
 `;
