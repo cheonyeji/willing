@@ -18,7 +18,7 @@ const css = `
   }
 `;
 
-type ShowCalendarProps = { className: string };
+type ShowCalendarProps = { className?: string };
 
 function ShowCalendar(props: ShowCalendarProps) {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
