@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import LeftSidePage from "./LeftSidePage";
 import RightSidePage from "./RightSidePage";
-import ToDoPage from "./ToDoPage";
+import CenterPage from "./CenterPage";
 
 type pageProps = { className: string };
 
@@ -10,7 +10,7 @@ function MainPage() {
   return (
     <Wrapper>
       <LeftSidePageWrapper className="" />
-      <ToDoPageWrapper className="" />
+      <CenterPageWrapper className="" />
       <RightSidePageWrapper className="" />
     </Wrapper>
   );
@@ -38,7 +38,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const ToDoPageWrapper = styled((props: pageProps) => <ToDoPage {...props} />)`
+const CenterPageWrapper = styled((props: pageProps) => (
+  <CenterPage {...props} />
+))`
   margin: 30px 0;
   grid-column: 3/10;
   background-color: rgb(255, 255, 255);
