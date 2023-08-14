@@ -57,7 +57,6 @@ const Form = styled.form`
   background-color: none;
   flex-grow: 1;
   background-color: transparent;
-
   @media (max-width: 768px) {
     align-items: center;
     margin-bottom: 0px;
@@ -68,8 +67,6 @@ const Input = styled.input`
   border: none;
   padding: 5px 0px;
   font-size: 12px;
-  color: #929292;
-
   @media (max-width: 1200px) {
     background-color: transparent;
   }
@@ -77,5 +74,7 @@ const Input = styled.input`
   &:focus {
     outline: none;
     color: #000;
+    background-color: rgba(240, 245, 252, 1);
+    border-radius: 2px;
   }
 `;
