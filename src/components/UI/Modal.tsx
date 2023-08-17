@@ -14,6 +14,7 @@ function Modal({ children }: ModalProps) {
   useEffect(() => {
     const closeModal = (e: MouseEvent) => {
       // 이벤트가 발생한 노드가 모달 컴포넌트 내부에 존재하지 않는다면 close
+      // CalenderBtn, MemoBtn 클릭시에는 다르게 잡아줘야함 (미구현)
       if (
         isModalShown &&
         modalRef.current &&
