@@ -1,5 +1,5 @@
-import React from "react";
-import { useSetRecoilState } from "recoil";
+import React, { useRef, useEffect } from "react";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { isModalShownState } from "../../models/atoms";
 
@@ -8,11 +8,29 @@ type ModalProps = {
 };
 
 function Modal({ children }: ModalProps) {
-  const setIsModalShown = useSetRecoilState(isModalShownState);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const [isModalShown, setIsModalShown] = useRecoilState(isModalShownState);
+
+  useEffect(() => {
+    const closeModal = (e: MouseEvent) => {
+      // 이벤트가 발생한 노드가 모달 컴포넌트 내부에 존재하지 않는다면 close
+      if (
+        isModalShown &&
+        modalRef.current &&
+        !modalRef.current.contains(e.target as Node)
+      ) {
+        setIsModalShown(0);
+      }
+    };
+    document.addEventListener("mousedown", closeModal);
+    return () => {
+      document.removeEventListener("mousedown", closeModal);
+    };
+  }, [isModalShown]);
 
   return (
     <Backdrop>
-      <ModalWrapper>{children}</ModalWrapper>
+      <ModalWrapper ref={modalRef}>{children}</ModalWrapper>
     </Backdrop>
   );
 }
