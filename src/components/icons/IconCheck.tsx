@@ -12,9 +12,9 @@ function IconCheck() {
       <path
         d="M2.82611 5.9913L5.7935 9.04347L10.7392 3.95651"
         stroke="white"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
