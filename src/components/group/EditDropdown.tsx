@@ -120,9 +120,9 @@ const Ul = styled.ul`
   padding: 4px;
   position: absolute;
   border-radius: 4px;
-  background-color: #ffffff;
   box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
   max-width: 160px;
+  background-color: #ffffff;
 `;
 
 const Li = styled.li`
