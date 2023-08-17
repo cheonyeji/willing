@@ -151,3 +151,21 @@ export const isOverCompletedState = atom<boolean>({
   key: "isOverCompletedState",
   default: false,
 });
+
+/* 모달창 여부 */
+export const isModalShownState = atom<number>({
+  key: "isModalShownState",
+  default: 0,
+});
+
+/* Memo 모달창 여부 */
+export const isMemoModalShownState = atom<boolean>({
+  key: "isMemoModalShownState",
+  default: false,
+});
+
+/* Calendar 모달창 여부*/
+export const isCalendarModalShownState = atom<boolean>({
+  key: "isCalendarModalShownState",
+  default: false,
+});

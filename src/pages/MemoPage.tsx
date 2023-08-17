@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 import Memos from "../components/memo/Memos";
 import NewMemo from "../components/memo/NewMemo";
-type MemoPageProps = { className: string };
+
+type MemoPageProps = { className?: string };
 
 function MemoPage(props: MemoPageProps) {
   return (
