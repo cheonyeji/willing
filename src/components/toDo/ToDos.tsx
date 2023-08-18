@@ -6,18 +6,33 @@ import { Droppable } from "react-beautiful-dnd";
 
 function ToDos() {
   const toDosByDate = useRecoilValue(toDosByDateSelector);
-
+  const unpinnedToDos = toDosByDate.filter((toDo) => !toDo.pinned);
+  const pinnedToDos = toDosByDate.filter((toDo) => toDo.pinned);
   return (
-    <Droppable droppableId="todos">
-      {(provided) => (
-        <Ul ref={provided.innerRef} {...provided.droppableProps}>
-          {toDosByDate.map((item, index) => (
-            <ToDoItem key={item.id} index={index} item={item} />
-          ))}
-          {provided.placeholder}
-        </Ul>
-      )}
-    </Droppable>
+    <>
+      <Droppable droppableId="pinnedTodos">
+        {(provided) => (
+          <Ul ref={provided.innerRef} {...provided.droppableProps}>
+            {pinnedToDos.length !== 0 && <PinnedTitle>Pinned</PinnedTitle>}
+            {pinnedToDos.map((item, index) => (
+              <ToDoItem key={item.id} index={index} item={item} />
+            ))}
+            {provided.placeholder}
+          </Ul>
+        )}
+      </Droppable>
+      <Droppable droppableId="unpinnedTodos">
+        {(provided) => (
+          <Ul ref={provided.innerRef} {...provided.droppableProps}>
+            {pinnedToDos.length !== 0 && unpinnedToDos.length !== 0 && <Hr />}
+            {unpinnedToDos.map((item, index) => (
+              <ToDoItem key={item.id} index={index} item={item} />
+            ))}
+            {provided.placeholder}
+          </Ul>
+        )}
+      </Droppable>
+    </>
   );
 }
 
@@ -45,3 +60,14 @@ const Ul = styled.ul`
     background: rgba(33, 122, 244, 0.1); /* scrollbar background color*/
   }
 `;
+
+const Hr = styled.hr`
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  background: #b0b0b0;
+  height: 1px;
+  border: 0;
+`;
+
+const PinnedTitle = styled.div``;
