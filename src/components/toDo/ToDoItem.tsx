@@ -1,5 +1,13 @@
 import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { styled } from "styled-components";
+import {
+  Draggable,
+  DraggableStateSnapshot,
+  DraggingStyle,
+  NotDraggingStyle,
+} from "react-beautiful-dnd";
+
 import {
   IGroup,
   groupColorById,
@@ -7,17 +15,12 @@ import {
   toDosState,
   groupsState,
 } from "../../models/atoms";
-import { styled } from "styled-components";
 import ToDo from "../../models/todo";
 import EditText from "./EditText";
-import {
-  Draggable,
-  DraggableStateSnapshot,
-  DraggingStyle,
-  NotDraggingStyle,
-} from "react-beautiful-dnd";
 import { findSameId } from "../../utils/RecoilFunctions";
 import Dropdown from "../UI/Dropdown";
+import IconKebap from "../icons/IconKebap";
+import PinDropdown from "./PinDropdown";
 
 type ToDoItemProps = {
   item: ToDo;
@@ -33,8 +36,13 @@ function ToDoItem({ item, index }: ToDoItemProps) {
 
   const [isEdit, setIsEdit] = useState(false);
   const [isUlVisible, setIsUlVisible] = useState(false);
+  const [isPinDropdownVisible, setIsPinDropdownVisible] = useState(false);
 
   const setToDos = useSetRecoilState(toDosState);
+
+  const kebapClickHandler = () => {
+    setIsPinDropdownVisible(!isPinDropdownVisible);
+  };
 
   const toggleCheckbox = (isChecked: boolean) => {
     // 해당 item id 전체 요소에서 찾아서 바꾸기
@@ -59,6 +67,7 @@ function ToDoItem({ item, index }: ToDoItemProps) {
       return newState;
     });
   };
+
   const getStyle = (
     style: DraggingStyle | NotDraggingStyle,
     snapshot: DraggableStateSnapshot,
@@ -114,24 +123,32 @@ function ToDoItem({ item, index }: ToDoItemProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          isOverTrashCan={isOverTrashCan}
-          isDragging={snapshot.isDragging}
           style={getStyle(
             provided.draggableProps.style!,
             snapshot,
             isOverTrashCan
           )}
-          isDone={item.isDone}
+          $isovertrashcan={isOverTrashCan}
+          $isdragging={snapshot.isDragging}
+          $isdone={item.isDone}
+          $isedit={isUlVisible || isEdit}
+          onMouseLeave={() => setIsPinDropdownVisible(false)}
         >
           <ItemText>
             <ColorCircle
               $colorstring={groupColorString}
               onDoubleClick={() => {
                 setIsUlVisible(!isUlVisible);
+                setIsPinDropdownVisible(false);
               }}
             />
 
-            <TextSpan onDoubleClick={() => setIsEdit(!isEdit)}>
+            <TextSpan
+              onDoubleClick={() => {
+                setIsEdit(!isEdit);
+                setIsPinDropdownVisible(false);
+              }}
+            >
               {isEdit ? (
                 <EditText
                   text={item.text}
@@ -160,6 +177,13 @@ function ToDoItem({ item, index }: ToDoItemProps) {
               toggleCheckbox(e.target.checked);
             }}
           />
+
+          <IconKebapWrapper onClick={kebapClickHandler}>
+            <IconKebap />
+            {isPinDropdownVisible && (
+              <PinDropdown todoId={item.id} todoPinned={item.pinned} />
+            )}
+          </IconKebapWrapper>
         </ItemCard>
       )}
     </Draggable>
@@ -169,10 +193,17 @@ function ToDoItem({ item, index }: ToDoItemProps) {
 export default React.memo(ToDoItem);
 
 interface ICard {
-  isOverTrashCan: boolean;
-  isDragging: boolean;
-  isDone: boolean;
+  $isovertrashcan: boolean;
+  $isdragging: boolean;
+  $isdone: boolean;
+  $isedit: boolean;
 }
+
+const IconKebapWrapper = styled.div`
+  display: none;
+  cursor: pointer;
+`;
+
 const ItemCard = styled.li<ICard>`
   box-shadow: 0px 0px 15px 0px rgba(29, 90, 132, 0.08);
   border-radius: 7px;
@@ -183,10 +214,17 @@ const ItemCard = styled.li<ICard>`
   margin-right: 30px;
   background-color: #ffffff;
   box-shadow: ${(props) =>
-    props.isOverTrashCan && props.isDragging ? "0 0 0.3rem #d34747b4" : ""};
+    props.$isovertrashcan && props.$isdragging ? "0 0 0.3rem #d34747b4" : ""};
   display: flex;
   word-break: break-all; // for forbidding text overflow
-  color: ${(props) => (props.isDone ? "#929292" : "#000000")};
+  color: ${(props) => (props.$isdone ? "#929292" : "#000000")};
+
+  &:hover > ${IconKebapWrapper} {
+    display: ${(props) => {
+      if (props.$isedit) return "none";
+      else return "block";
+    }};
+  }
 `;
 
 const ColorCircle = styled.div<{ $colorstring: string }>`
