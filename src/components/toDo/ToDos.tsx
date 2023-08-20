@@ -3,6 +3,7 @@ import ToDoItem from "./ToDoItem";
 import { toDosByDateSelector } from "../../models/atoms";
 import { styled } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
+import IconPin from "../icons/IconPin";
 
 function ToDos() {
   const toDosByDate = useRecoilValue(toDosByDateSelector);
@@ -13,7 +14,15 @@ function ToDos() {
       <Droppable droppableId="pinnedTodos">
         {(provided) => (
           <Ul ref={provided.innerRef} {...provided.droppableProps}>
-            {pinnedToDos.length !== 0 && <PinnedTitle>Pinned</PinnedTitle>}
+            {pinnedToDos.length !== 0 && (
+              <PinnedTitle>
+                {" "}
+                <Icon>
+                  <IconPin />
+                </Icon>
+                Pin
+              </PinnedTitle>
+            )}
             {pinnedToDos.map((item, index) => (
               <ToDoItem key={item.id} index={index} item={item} />
             ))}
@@ -65,9 +74,20 @@ const Hr = styled.hr`
   width: 90%;
   margin: 0 auto;
   margin-bottom: 10px;
-  background: #b0b0b0;
-  height: 1px;
+  background: #00000011;
+  height: 0.2px;
   border: 0;
 `;
 
-const PinnedTitle = styled.div``;
+const PinnedTitle = styled.div`
+  margin: 0 auto;
+  width: 92%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+`;
+
+const Icon = styled.div`
+  padding-left: 10px;
+  padding-right: 5px;
+`;
