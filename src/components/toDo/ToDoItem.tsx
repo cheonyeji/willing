@@ -208,7 +208,6 @@ const ItemCard = styled.li<ICard>`
   box-shadow: 0px 0px 15px 0px rgba(29, 90, 132, 0.08);
   border-radius: 7px;
   padding: 11px 11px;
-
   margin-bottom: 12px;
   margin-left: 30px;
   margin-right: 30px;
@@ -241,11 +240,11 @@ const ItemText = styled.div`
   display: flex;
   align-items: center;
   flex-grow: 1;
-
   margin-right: 10px;
 `;
 
 const TextSpan = styled.span`
   width: 100%;
   display: block;
+  padding: 3px;
 `;

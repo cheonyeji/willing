@@ -77,11 +77,12 @@ const ColorCircle = styled.div<{ $colorstring: string }>`
 `;
 
 const TitleSpan = styled.span`
-  width: 80px;
-  text-align: left;
+  width: 52px;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 13px;
 `;
 
 const IconWrapper = styled.div`

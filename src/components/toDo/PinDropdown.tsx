@@ -72,8 +72,8 @@ function PinDropdown(props: PinDropdown) {
 
   return (
     <Ul>
-      {!props.todoPinned && <Li onClick={pinnedClickHandler}>pinned</Li>}
-      {props.todoPinned && <Li onClick={unPinnedClickHandler}>unPinned</Li>}
+      {!props.todoPinned && <Li onClick={pinnedClickHandler}>Pin</Li>}
+      {props.todoPinned && <Li onClick={unPinnedClickHandler}>UnPinned</Li>}
     </Ul>
   );
 }
@@ -86,13 +86,13 @@ const Ul = styled.ul`
   position: absolute;
   border-radius: 4px;
   box-shadow: 0px 8px 8px 0px rgba(29, 91, 132, 0.25);
-  max-width: 160px;
   background-color: #ffffff;
 `;
-
+// 드롭다운 메뉴 가로길이 수정
 const Li = styled.li`
   display: flex;
   padding: 4px;
+  width: 100%;
   align-items: baseline;
   cursor: pointer;
   &:hover {
