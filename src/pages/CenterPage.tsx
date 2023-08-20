@@ -25,7 +25,7 @@ function CenterPage(props: CenterPageProps) {
   const setIsDragging = useSetRecoilState(isDraggingState);
   const setIsOverTrashCan = useSetRecoilState(isOverTrashCanState);
 
-  const dragEndHandler = ({ destination, draggableId }: DropResult) => {
+  const dragEndHandler = ({ destination, draggableId, source }: DropResult) => {
     setIsDragging(false);
     setIsOverTrashCan(false);
 
@@ -33,30 +33,45 @@ function CenterPage(props: CenterPageProps) {
       return;
     }
 
-    if (destination.droppableId === "todos") {
+    if (destination.droppableId === "trashcan") {
       setTodos((allTodos) => {
         const copyTodos = [...allTodos];
         const sourceIndex = allTodos.findIndex((element) =>
           findSameId(element, +draggableId)
         );
-        const moveTodo = copyTodos[sourceIndex];
-        const destinationIndex = allTodos.findIndex((element) =>
-          findSameId(element, toDosByDate[destination.index].id)
-        );
         copyTodos.splice(sourceIndex, 1);
-        copyTodos.splice(destinationIndex, 0, moveTodo);
 
         return copyTodos;
       });
-    } else if (destination.droppableId === "trashcan") {
+    } else {
       setTodos((allTodos) => {
-        const copyTodos = [...allTodos];
         const sourceIndex = allTodos.findIndex((element) =>
           findSameId(element, +draggableId)
         );
-        copyTodos.splice(sourceIndex, 1);
 
-        return copyTodos;
+        const unpinnedToDos = allTodos.filter((toDo) => !toDo.pinned);
+        const pinnedToDos = allTodos.filter((toDo) => toDo.pinned);
+
+        const moveTodo = { ...allTodos[sourceIndex] };
+
+        if (destination.droppableId !== source.droppableId) {
+          moveTodo.pinned =
+            destination.droppableId === "unpinnedTodos" ? false : true;
+        }
+
+        if (source.droppableId === "unpinnedTodos") {
+          unpinnedToDos.splice(source.index, 1);
+        } else {
+          pinnedToDos.splice(source.index, 1);
+        }
+
+        if (destination.droppableId === "unpinnedTodos") {
+          unpinnedToDos.splice(destination.index, 0, moveTodo);
+        } else {
+          pinnedToDos.splice(destination.index, 0, moveTodo);
+        }
+
+        return [...unpinnedToDos, ...pinnedToDos];
       });
     }
   };
@@ -107,4 +122,5 @@ const Wrapper = styled.div`
   flex-direction: column;
   overflow-y: auto;
   position: relative;
+  flex-grow: 1;
 `;

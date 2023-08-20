@@ -7,13 +7,15 @@ class ToDo implements IToDo {
   groupId: number;
   dueDate: Date;
   createdDate: Date;
+  pinned: boolean;
 
   constructor(
     text: string,
     groupId: number,
     dueDate: Date,
     createdDate: Date,
-    isDone: boolean
+    isDone: boolean,
+    pinned?: boolean
   ) {
     this.text = text;
     this.id = Date.now();
@@ -21,6 +23,7 @@ class ToDo implements IToDo {
     this.isDone = isDone;
     this.dueDate = dueDate;
     this.createdDate = createdDate;
+    this.pinned = pinned ? pinned : false;
   }
 }
 

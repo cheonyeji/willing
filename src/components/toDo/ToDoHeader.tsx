@@ -8,12 +8,12 @@ import { useEffect } from "react";
 
 function ToDoHeader() {
   const [selectedDate, setSelectedDate] = useRecoilState(selectedDateState);
-  
+
   // Set default date to today
   useEffect(() => {
     setSelectedDate(new Date());
   }, []);
-  
+
   const dateString = isSameDate(selectedDate, new Date())
     ? "오늘의 할일"
     : new Date(selectedDate).toLocaleDateString("ko-KR", {

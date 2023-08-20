@@ -113,7 +113,7 @@ const Hr = styled.hr`
   width: 90%;
   margin: 0 auto;
   margin-bottom: 10px;
-  background: #b0b0b0;
-  height: 1px;
+  background: #00000016;
+  height: 0.3px;
   border: 0;
 `;

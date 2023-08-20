@@ -84,6 +84,7 @@ export interface IToDo {
   groupId: number;
   dueDate: Date;
   createdDate: Date;
+  pinned: boolean;
 }
 
 // 전체 ToDo 요소 배열
