@@ -3,7 +3,6 @@ import { useRecoilState } from "recoil";
 import { DayPicker } from "react-day-picker";
 import "./calendar.css";
 import { selectedDateState } from "../../models/atoms";
-import { styled } from "styled-components";
 
 const css = `
   .my-selected {
