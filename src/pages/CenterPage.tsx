@@ -109,7 +109,7 @@ function CenterPage(props: CenterPageProps) {
 export default CenterPage;
 
 const Wrap = styled.div`
-  width: 100%;
+  /* width: 100%; */
 
   display: flex;
   flex-direction: column;

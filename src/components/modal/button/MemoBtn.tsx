@@ -36,6 +36,7 @@ const Button = styled.div`
   align-items: center;
   gap: 8px;
   border-radius: 100%;
+  z-index: 999999;
   &:hover {
     box-shadow: 0px 4px 4px 0px rgba(29, 90, 132, 0.08);
     transform: scale(1.05);

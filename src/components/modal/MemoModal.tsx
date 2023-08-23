@@ -20,5 +20,11 @@ const Wrapper = styled.div`
   background-color: #ffffff;
 
   width: 300px;
-  height: 300px;
+  height: 380px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  @media (max-width: 360px) {
+    width: 260px;
+    height: 340px;
+  }
 `;
