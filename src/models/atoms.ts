@@ -1,6 +1,6 @@
 import { atom, selector, selectorFamily } from "recoil";
 
-import { isSameDate } from "../utils/RecoilFunctions";
+import { isBeforeToday, isSameDate } from "../utils/RecoilFunctions";
 import Group from "./group";
 
 const localStorageEffect =
@@ -103,6 +103,18 @@ export const toDosByDateSelector = selector({
       isSameDate(todo.dueDate, selectedDate)
     );
     return toDosBySelectedDate;
+  },
+});
+
+// 오늘날짜 이전 미완료된 목록
+export const undoneToDosSelector = selector({
+  key: "undoneToDosSelector",
+  get: ({ get }) => {
+    const toDos = get(toDosState);
+    const undoneToDos = toDos.filter(
+      (todo) => isBeforeToday(todo.dueDate) && (!todo.isDone ? true : false)
+    );
+    return undoneToDos;
   },
 });
 
