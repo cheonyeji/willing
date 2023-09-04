@@ -16,6 +16,7 @@ import {
 import { findSameId } from "../utils/RecoilFunctions";
 import MemoModal from "../components/modal/MemoModal";
 import CalendarModal from "../components/modal/CalendarModal";
+import LoginModal from "../components/modal/LoginModal";
 
 type CenterPageProps = { className: string };
 
@@ -82,6 +83,8 @@ function CenterPage(props: CenterPageProps) {
     content = <MemoModal />;
   } else if (isModalShown === 2) {
     content = <CalendarModal />;
+  } else if (isModalShown === 3) {
+    content = <LoginModal />;
   }
   return (
     <Wrap className={props.className}>

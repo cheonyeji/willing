@@ -1,8 +1,15 @@
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
+import { isModalShownState } from "../../models/atoms";
 
 function Profile() {
+  const [isModalShown, setIsModalShown] = useRecoilState(isModalShownState);
+  const clickHandler = () => {
+    setIsModalShown(isModalShown ? 0 : 3);
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onClick={clickHandler}>
       <ProfileImg />
       <ProfileText>{"피곤한 고양이"}</ProfileText>
     </Wrapper>
@@ -23,6 +30,9 @@ const Wrapper = styled.div`
     margin-left: 30px;
     margin-right: 8px;
     height: 130px;
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
 
