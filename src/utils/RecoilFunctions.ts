@@ -14,3 +14,20 @@ export const isSameDate = (date1: Date, date2: Date) => {
     new Date(date1).getDate() === new Date(date2).getDate()
   );
 };
+
+export const isBeforeToday = (date1: Date) => {
+  const date1_yymmdd = new Date(
+    new Date(date1).getFullYear(),
+    new Date(date1).getMonth() + 1,
+    new Date(date1).getDate()
+  );
+  const today_yymmdd = new Date(
+    new Date().getFullYear(),
+    new Date().getMonth() + 1,
+    new Date().getDate()
+  );
+  console.log(date1_yymmdd, today_yymmdd, date1_yymmdd < today_yymmdd);
+  if (date1_yymmdd < today_yymmdd) {
+    return true;
+  } else return false;
+};
