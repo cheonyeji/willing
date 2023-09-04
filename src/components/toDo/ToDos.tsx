@@ -1,16 +1,57 @@
 import { useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
 import ToDoItem from "./ToDoItem";
-import { toDosByDateSelector } from "../../models/atoms";
+import {
+  selectedDateState,
+  toDosByDateSelector,
+  undoneToDosSelector,
+} from "../../models/atoms";
 import { styled } from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 import IconPin from "../icons/IconPin";
+import { isSameDate } from "../../utils/RecoilFunctions";
+import SelectUndone from "./SelectUndone";
 
 function ToDos() {
+  const selectedDate = useRecoilValue(selectedDateState);
   const toDosByDate = useRecoilValue(toDosByDateSelector);
   const unpinnedToDos = toDosByDate.filter((toDo) => !toDo.pinned);
   const pinnedToDos = toDosByDate.filter((toDo) => toDo.pinned);
+  const undoneToDos = useRecoilValue(undoneToDosSelector);
+
+  const [isUlVisible, setIsUlVisible] = useState(false);
+
+  useEffect(() => {
+    if (undoneToDos.length === 0) {
+      setIsUlVisible(false);
+    }
+  }, [undoneToDos.length]);
+
+  const showUndoneToDos = isSameDate(selectedDate, new Date());
   return (
     <>
+      {showUndoneToDos && (
+        <Droppable droppableId="undoneTodos">
+          {(provided) => (
+            <Ul ref={provided.innerRef} {...provided.droppableProps}>
+              {undoneToDos.length !== 0 && (
+                <SelectUndone
+                  isUlVisible={isUlVisible}
+                  setIsUlVisible={setIsUlVisible}
+                />
+              )}
+              {undoneToDos.length !== 0 &&
+                isUlVisible &&
+                undoneToDos.map((item, index) => (
+                  <ToDoItem key={item.id} index={index} item={item} />
+                ))}
+              {undoneToDos.length !== 0 && <Hr />}
+              {provided.placeholder}
+            </Ul>
+          )}
+        </Droppable>
+      )}
+
       <Droppable droppableId="pinnedTodos">
         {(provided) => (
           <Ul ref={provided.innerRef} {...provided.droppableProps}>
@@ -78,6 +119,8 @@ const Hr = styled.hr`
   height: 0.2px;
   border: 0;
 `;
+
+const UndoneTitle = styled.div``;
 
 const PinnedTitle = styled.div`
   margin: 0 auto;
