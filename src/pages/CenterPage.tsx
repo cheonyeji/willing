@@ -125,17 +125,20 @@ function CenterPage(props: CenterPageProps) {
 
       const moveTodo = { ...allTodos[sourceIndex] };
 
-      if (
-        destination.droppableId !== source.droppableId &&
-        destination.droppableId !== UNDONE
-      ) {
-        moveTodo.pinned = destination.droppableId === UNPINNED ? false : true;
+      if (moveTodo.pinned) {
+        const sourceIndex = pinnedToDos.findIndex((element) =>
+          findSameId(element, +draggableId)
+        );
+        pinnedToDos.splice(sourceIndex, 1);
+      } else {
+        const sourceIndex = unpinnedToDos.findIndex((element) =>
+          findSameId(element, +draggableId)
+        );
+        unpinnedToDos.splice(sourceIndex, 1);
       }
 
-      if (source.droppableId === UNPINNED) {
-        unpinnedToDos.splice(source.index, 1);
-      } else if (source.droppableId === PINNED) {
-        pinnedToDos.splice(source.index, 1);
+      if (destination.droppableId !== source.droppableId) {
+        moveTodo.pinned = destination.droppableId === UNPINNED ? false : true;
       }
 
       if (destination.droppableId === UNPINNED) {
