@@ -10,8 +10,8 @@ import {
   isDraggingState,
   isModalShownState,
   isOverTrashCanState,
-  toDosByDateSelector,
   toDosState,
+  undoneToDosSelector,
 } from "../models/atoms";
 import { findSameId } from "../utils/RecoilFunctions";
 import MemoModal from "../components/modal/MemoModal";
@@ -19,11 +19,16 @@ import CalendarModal from "../components/modal/CalendarModal";
 
 type CenterPageProps = { className: string };
 
+const UNDONE = "undoneTodos";
+const TRASHCAN = "trashcan";
+const UNPINNED = "unpinnedTodos";
+const PINNED = "pinnedTodos";
+
 function CenterPage(props: CenterPageProps) {
   const setTodos = useSetRecoilState(toDosState);
-  const toDosByDate = useRecoilValue(toDosByDateSelector);
   const setIsDragging = useSetRecoilState(isDraggingState);
   const setIsOverTrashCan = useSetRecoilState(isOverTrashCanState);
+  const undoneToDos = useRecoilValue(undoneToDosSelector);
 
   const dragEndHandler = ({ destination, draggableId, source }: DropResult) => {
     setIsDragging(false);
@@ -33,47 +38,114 @@ function CenterPage(props: CenterPageProps) {
       return;
     }
 
-    if (destination.droppableId === "trashcan") {
+    // 미래에서 -> 과거 할일로 옮기는 것 불가능
+    if (destination.droppableId === UNDONE && source.droppableId !== UNDONE) {
+      return;
+    }
+
+    if (destination.droppableId === TRASHCAN) {
       setTodos((allTodos) => {
         const copyTodos = [...allTodos];
         const sourceIndex = allTodos.findIndex((element) =>
           findSameId(element, +draggableId)
         );
         copyTodos.splice(sourceIndex, 1);
-
         return copyTodos;
       });
-    } else {
-      setTodos((allTodos) => {
-        const sourceIndex = allTodos.findIndex((element) =>
-          findSameId(element, +draggableId)
-        );
+      return;
+    }
 
+    // 미완료된 할일 -> 오늘자로 미루기 기능
+    if (source.droppableId === UNDONE && destination.droppableId !== UNDONE) {
+      setTodos((allTodos) => {
         const unpinnedToDos = allTodos.filter((toDo) => !toDo.pinned);
         const pinnedToDos = allTodos.filter((toDo) => toDo.pinned);
 
+        const sourceIndex = allTodos.findIndex((element) =>
+          findSameId(element, +draggableId)
+        );
         const moveTodo = { ...allTodos[sourceIndex] };
 
-        if (destination.droppableId !== source.droppableId) {
-          moveTodo.pinned =
-            destination.droppableId === "unpinnedTodos" ? false : true;
-        }
-
-        if (source.droppableId === "unpinnedTodos") {
-          unpinnedToDos.splice(source.index, 1);
+        if (moveTodo.pinned) {
+          const sourceIndex = pinnedToDos.findIndex((element) =>
+            findSameId(element, +draggableId)
+          );
+          pinnedToDos.splice(sourceIndex, 1);
         } else {
-          pinnedToDos.splice(source.index, 1);
+          const sourceIndex = unpinnedToDos.findIndex((element) =>
+            findSameId(element, +draggableId)
+          );
+          unpinnedToDos.splice(sourceIndex, 1);
         }
 
-        if (destination.droppableId === "unpinnedTodos") {
+        moveTodo.pinned = destination.droppableId === UNPINNED ? false : true;
+        moveTodo.dueDate = new Date();
+
+        if (destination.droppableId === UNPINNED) {
           unpinnedToDos.splice(destination.index, 0, moveTodo);
-        } else {
+        } else if (destination.droppableId === PINNED) {
           pinnedToDos.splice(destination.index, 0, moveTodo);
         }
-
         return [...unpinnedToDos, ...pinnedToDos];
       });
+      return;
     }
+
+    // 미완료 내부에서 순서변경
+    if (destination.droppableId === UNDONE && source.droppableId === UNDONE) {
+      const moveTodo = { ...undoneToDos[source.index] };
+      const sourceId = undoneToDos[source.index].id;
+      const destId = undoneToDos[destination.index].id;
+
+      setTodos((allTodos) => {
+        const sourceIndex = allTodos.findIndex((element) =>
+          findSameId(element, sourceId)
+        );
+        const destIndex = allTodos.findIndex((element) =>
+          findSameId(element, destId)
+        );
+        const copyAllTodos = [...allTodos];
+
+        copyAllTodos.splice(sourceIndex, 1);
+        copyAllTodos.splice(destIndex, 0, moveTodo);
+        return copyAllTodos;
+      });
+
+      return;
+    }
+
+    // 그 외의 경우
+    setTodos((allTodos) => {
+      const sourceIndex = allTodos.findIndex((element) =>
+        findSameId(element, +draggableId)
+      );
+
+      const unpinnedToDos = allTodos.filter((toDo) => !toDo.pinned);
+      const pinnedToDos = allTodos.filter((toDo) => toDo.pinned);
+
+      const moveTodo = { ...allTodos[sourceIndex] };
+
+      if (
+        destination.droppableId !== source.droppableId &&
+        destination.droppableId !== UNDONE
+      ) {
+        moveTodo.pinned = destination.droppableId === UNPINNED ? false : true;
+      }
+
+      if (source.droppableId === UNPINNED) {
+        unpinnedToDos.splice(source.index, 1);
+      } else if (source.droppableId === PINNED) {
+        pinnedToDos.splice(source.index, 1);
+      }
+
+      if (destination.droppableId === UNPINNED) {
+        unpinnedToDos.splice(destination.index, 0, moveTodo);
+      } else if (destination.droppableId === PINNED) {
+        pinnedToDos.splice(destination.index, 0, moveTodo);
+      }
+
+      return [...unpinnedToDos, ...pinnedToDos];
+    });
   };
 
   const isModalShown = useRecoilValue(isModalShownState);
@@ -89,7 +161,7 @@ function CenterPage(props: CenterPageProps) {
         onDragEnd={dragEndHandler}
         onBeforeCapture={() => setIsDragging(true)}
         onDragUpdate={(update) => {
-          update.destination?.droppableId === "trashcan"
+          update.destination?.droppableId === TRASHCAN
             ? setIsOverTrashCan(true)
             : setIsOverTrashCan(false);
         }}
