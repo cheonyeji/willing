@@ -26,7 +26,6 @@ export const isBeforeToday = (date1: Date) => {
     new Date().getMonth() + 1,
     new Date().getDate()
   );
-  console.log(date1_yymmdd, today_yymmdd, date1_yymmdd < today_yymmdd);
   if (date1_yymmdd < today_yymmdd) {
     return true;
   } else return false;
