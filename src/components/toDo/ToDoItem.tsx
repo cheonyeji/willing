@@ -56,7 +56,9 @@ function ToDoItem({ item, index }: ToDoItemProps) {
         item.groupId,
         item.dueDate,
         item.createdDate,
-        isChecked
+        isChecked,
+        item.pinned,
+        item.id
       );
 
       // because of state immutability, cannot mutate state. So set new State

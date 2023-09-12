@@ -15,10 +15,11 @@ class ToDo implements IToDo {
     dueDate: Date,
     createdDate: Date,
     isDone: boolean,
-    pinned?: boolean
+    pinned?: boolean,
+    id?: number
   ) {
     this.text = text;
-    this.id = Date.now();
+    this.id = id ? id : Date.now();
     this.groupId = groupId;
     this.isDone = isDone;
     this.dueDate = dueDate;
